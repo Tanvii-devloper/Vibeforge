@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="100%" height="100%">
+  <defs>
+    <radialGradient id="potatoLeaf" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#468834"/>
+      <stop offset="70%" stop-color="#2a6220"/>
+      <stop offset="100%" stop-color="#183f12"/>
+    </radialGradient>
+    <radialGradient id="targetLesion" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2c1a0e"/>
+      <stop offset="35%" stop-color="#5a3818"/>
+      <stop offset="60%" stop-color="#3c220f"/>
+      <stop offset="85%" stop-color="#8a6c22"/>
+      <stop offset="100%" stop-color="#d4c044" stop-opacity="0.8"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="450" fill="#1b241c"/>
+  <g transform="translate(150, 40)">
+    <path d="M150,30 C230,70 270,170 250,270 C230,350 180,380 150,390 C120,380 70,350 50,270 C30,170 70,70 150,30 Z" fill="url(#potatoLeaf)" stroke="#1a4217" stroke-width="3"/>
+    <path d="M150,35 L150,385" stroke="#71aa68" stroke-width="3.5"/>
+    <circle cx="190" cy="190" r="34" fill="url(#targetLesion)"/>
+    <circle cx="190" cy="190" r="24" stroke="#231409" stroke-width="2" fill="none"/>
+    <circle cx="190" cy="190" r="14" stroke="#3d2311" stroke-width="2" fill="none"/>
+    <circle cx="110" cy="270" r="28" fill="url(#targetLesion)"/>
+    <circle cx="110" cy="270" r="18" stroke="#231409" stroke-width="1.8" fill="none"/>
+    <circle cx="110" cy="270" r="9" stroke="#3d2311" stroke-width="1.8" fill="none"/>
+  </g>
+  <rect x="20" y="390" width="560" height="42" rx="8" fill="#0f1712" fill-opacity="0.85"/>
+  <text x="300" y="416" fill="#facc15" font-family="sans-serif" font-size="15" font-weight="bold" text-anchor="middle">BENCHMARK SPECIMEN: Solanum tuberosum (Potato Early Blight - Alternaria solani)</text>
+</svg>

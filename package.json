@@ -1,0 +1,37 @@
+{
+  "name": "crop-guard-ai",
+  "version": "1.0.0",
+  "description": "AI-Powered Agriculture Micro-Climatic Crop Disease Early Warning System",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "server": "node server/index.js",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm run build --prefix client",
+    "seed": "node server/db/seed.js"
+  },
+  "keywords": [
+    "agriculture",
+    "gemini",
+    "plant-pathology",
+    "micro-climate",
+    "epidemiology",
+    "replit"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "^2.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

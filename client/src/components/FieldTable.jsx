@@ -1,0 +1,163 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  MapPin, 
+  Trash2, 
+  ExternalLink, 
+  ScanLine, 
+  AlertTriangle, 
+  ShieldCheck, 
+  ShieldAlert,
+  Thermometer,
+  Droplets
+} from 'lucide-react';
+
+export default function FieldTable({ fields = [], onDelete, onSelectField }) {
+  if (!fields || fields.length === 0) {
+    return (
+      <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-12 text-center">
+        <div className="w-12 h-12 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-3">
+          <MapPin className="w-6 h-6" />
+        </div>
+        <h3 className="text-base font-bold text-white">No Farm Plots Registered</h3>
+        <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
+          Register your field plots to track micro-climates, soil pathology, and real-time disease spread risks.
+        </p>
+      </div>
+    );
+  }
+
+  const getRiskPill = (level, score) => {
+    if (level === 'High') {
+      return (
+        <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/30">
+          <ShieldAlert className="w-3 h-3" />
+          <span>High ({score || 85}%)</span>
+        </span>
+      );
+    }
+    if (level === 'Moderate') {
+      return (
+        <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-400 border border-amber-500/30">
+          <AlertTriangle className="w-3 h-3" />
+          <span>Moderate ({score || 50}%)</span>
+        </span>
+      );
+    }
+    return (
+      <span className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+        <ShieldCheck className="w-3 h-3" />
+        <span>Low ({score || 15}%)</span>
+      </span>
+    );
+  };
+
+  const getCropBadgeColor = (crop) => {
+    const c = (crop || '').toLowerCase();
+    if (c.includes('tomato')) return 'bg-rose-500/20 text-rose-300 border-rose-500/30';
+    if (c.includes('potato')) return 'bg-amber-500/20 text-amber-300 border-amber-500/30';
+    if (c.includes('wheat') || c.includes('cereal')) return 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30';
+    if (c.includes('grape')) return 'bg-purple-500/20 text-purple-300 border-purple-500/30';
+    return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30';
+  };
+
+  return (
+    <div className="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm text-slate-300">
+          <thead className="bg-slate-800/80 text-[11px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-700/80">
+            <tr>
+              <th className="py-3.5 px-4">Plot Name & Location</th>
+              <th className="py-3.5 px-4">Crop Profile</th>
+              <th className="py-3.5 px-4">Latest Pathology Scan</th>
+              <th className="py-3.5 px-4">Micro-Climate</th>
+              <th className="py-3.5 px-4">Risk Level</th>
+              <th className="py-3.5 px-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800">
+            {fields.map((field) => (
+              <tr 
+                key={field.id}
+                className="hover:bg-slate-800/40 transition-colors group"
+              >
+                <td className="py-4 px-4">
+                  <div className="font-bold text-white group-hover:text-emerald-400 transition-colors">
+                    {field.name}
+                  </div>
+                  <div className="flex items-center space-x-1 text-xs text-slate-400 mt-0.5">
+                    <MapPin className="w-3 h-3 text-slate-500" />
+                    <span>{field.location}</span>
+                    {field.latitude && field.longitude && (
+                      <span className="text-[10px] text-slate-500 font-mono ml-1">
+                        ({Number(field.latitude).toFixed(2)}, {Number(field.longitude).toFixed(2)})
+                      </span>
+                    )}
+                  </div>
+                </td>
+
+                <td className="py-4 px-4">
+                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getCropBadgeColor(field.crop_type)}`}>
+                    {field.crop_type}
+                  </span>
+                </td>
+
+                <td className="py-4 px-4">
+                  <div className="font-medium text-slate-200">
+                    {field.latest_disease || 'Healthy / Untested'}
+                  </div>
+                  {field.diagnostic_confidence && (
+                    <div className="text-[11px] text-slate-400 font-mono">
+                      Confidence: {field.diagnostic_confidence}%
+                    </div>
+                  )}
+                </td>
+
+                <td className="py-4 px-4">
+                  <div className="flex items-center space-x-2 text-xs font-mono">
+                    <span className="flex items-center text-slate-300">
+                      <Thermometer className="w-3.5 h-3.5 text-amber-400 mr-0.5" />
+                      {field.temperature || 21}°C
+                    </span>
+                    <span className="flex items-center text-slate-300">
+                      <Droplets className="w-3.5 h-3.5 text-cyan-400 mr-0.5" />
+                      {field.relative_humidity || 75}%
+                    </span>
+                  </div>
+                  <div className="text-[10px] text-slate-500 font-mono mt-0.5">
+                    Wetness: {field.leaf_wetness_hours || 4}h
+                  </div>
+                </td>
+
+                <td className="py-4 px-4">
+                  {getRiskPill(field.risk_level, field.risk_score)}
+                </td>
+
+                <td className="py-4 px-4 text-right">
+                  <div className="flex items-center justify-end space-x-2">
+                    <Link
+                      to={`/diagnose?fieldId=${field.id}&cropType=${encodeURIComponent(field.crop_type)}`}
+                      className="p-1.5 rounded-lg bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white transition-colors"
+                      title="Run Diagnostic Scan"
+                    >
+                      <ScanLine className="w-4 h-4" />
+                    </Link>
+                    {onDelete && (
+                      <button
+                        onClick={() => onDelete(field.id)}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                        title="Delete Field Plot"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
