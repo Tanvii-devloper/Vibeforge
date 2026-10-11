@@ -10,6 +10,7 @@ import diagnosticsRouter from './routes/diagnostics.js';
 import fieldsRouter from './routes/fields.js';
 import advisoriesRouter from './routes/advisories.js';
 import analyticsRouter from './routes/analytics.js';
+import chatRouter from './routes/chat.js';
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use('/api/diagnostics', diagnosticsRouter);
 app.use('/api/fields', fieldsRouter);
 app.use('/api/advisories', advisoriesRouter);
 app.use('/api/analytics', analyticsRouter);
+app.use('/api/chat', chatRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

@@ -6,6 +6,7 @@ import DiagnosticStudioPage from './pages/DiagnosticStudioPage';
 import AdvisoryDetailPage from './pages/AdvisoryDetailPage';
 import FieldsPage from './pages/FieldsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import AgriGuardChatbot from './components/AgriGuardChatbot';
 import { Sprout, ShieldCheck, Radio } from 'lucide-react';
 
 export default function App() {
@@ -27,6 +28,9 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
+
+        {/* Floating 3D AgriGuard Expert Chatbot */}
+        <AgriGuardChatbot />
 
         {/* Futuristic Glassmorphic Footer */}
         <footer className="border-t border-white/10 bg-[#081711]/90 backdrop-blur-xl py-6 text-xs text-slate-400 font-mono">
