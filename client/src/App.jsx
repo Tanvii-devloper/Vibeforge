@@ -6,18 +6,18 @@ import DiagnosticStudioPage from './pages/DiagnosticStudioPage';
 import AdvisoryDetailPage from './pages/AdvisoryDetailPage';
 import FieldsPage from './pages/FieldsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
-import { Sprout, ShieldCheck } from 'lucide-react';
+import { Sprout, ShieldCheck, Radio } from 'lucide-react';
 
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
+      <div className="min-h-screen flex flex-col bg-[#081711] text-slate-100 font-sans selection:bg-emerald-500 selection:text-black">
         
-        {/* Enterprise Top Navigation */}
+        {/* Floating 3D Navigation Bar */}
         <Navbar />
 
         {/* Main Content Area */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/diagnose" element={<DiagnosticStudioPage />} />
@@ -28,24 +28,24 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Enterprise Footer */}
-        <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500">
+        {/* Futuristic Glassmorphic Footer */}
+        <footer className="border-t border-white/10 bg-[#081711]/90 backdrop-blur-xl py-6 text-xs text-slate-400 font-mono">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-2.5">
-              <div className="w-6 h-6 rounded-md bg-forest-800 text-mint-300 flex items-center justify-center font-bold">
+              <div className="w-6 h-6 rounded-lg bg-forest-800 text-neon-mint flex items-center justify-center font-bold border border-neon-mint/30 shadow-[0_0_10px_rgba(0,255,135,0.25)]">
                 <Sprout className="w-3.5 h-3.5" />
               </div>
-              <span className="font-bold text-slate-800">AgriGuard Enterprise</span>
-              <span className="text-slate-400">— AI-Powered Micro-Climatic Pathology Platform</span>
+              <span className="font-bold text-white text-glow-mint">AgriGuard 3D</span>
+              <span className="text-slate-400">— Futuristic Micro-Climatic Agritech Control Center</span>
             </div>
 
-            <div className="flex items-center space-x-6 text-[11px] font-medium text-slate-500">
-              <span className="flex items-center space-x-1.5 text-forest-800 font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5 text-forest-700" />
-                <span>Zero False Chemical Alarms Standard</span>
+            <div className="flex items-center space-x-6 text-[11px] font-medium text-slate-400">
+              <span className="flex items-center space-x-1.5 text-neon-mint font-semibold">
+                <ShieldCheck className="w-3.5 h-3.5 text-neon-mint" />
+                <span>Zero False Alarms Standard</span>
               </span>
               <span>Gemini 2.5 Flash Multimodal</span>
-              <span>Cloud Telemetry Sync</span>
+              <span>3D Zoned Telemetry</span>
             </div>
           </div>
         </footer>

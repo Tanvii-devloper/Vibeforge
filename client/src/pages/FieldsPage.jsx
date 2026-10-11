@@ -3,13 +3,11 @@ import {
   MapPin, 
   Plus, 
   Search, 
-  Filter, 
   Trash2, 
   ScanLine, 
   X, 
-  Check, 
-  AlertCircle,
-  Sprout
+  Sprout,
+  Radio 
 } from 'lucide-react';
 import FieldTable from '../components/FieldTable';
 
@@ -73,7 +71,6 @@ export default function FieldsPage() {
         throw new Error(data.error || 'Failed to create field');
       }
 
-      // Reset and close
       setNewFieldName('');
       setNewLocation('');
       setNewLatitude('');
@@ -103,7 +100,6 @@ export default function FieldsPage() {
     }
   };
 
-  // Filtered list
   const filteredFields = fields.filter(f => {
     const matchesSearch = f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           f.location.toLowerCase().includes(searchQuery.toLowerCase());
@@ -115,52 +111,52 @@ export default function FieldsPage() {
     <div className="space-y-6">
       
       {/* Header & New Plot Action */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="glass-panel-3d rounded-2xl p-6 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center space-x-2 text-xs font-bold text-forest-800 uppercase tracking-wider mb-1">
-            <MapPin className="w-4 h-4 text-forest-700" />
-            <span>Farm Plot Management</span>
+          <div className="flex items-center space-x-2 text-xs font-mono font-bold text-neon-mint uppercase tracking-wider mb-1">
+            <Radio className="w-4 h-4 text-neon-mint animate-pulse" />
+            <span>Farm Plot Telemetry Registry</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
-            Registered Agricultural Plots
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans text-glow-mint">
+            Registered Agricultural Sectors
           </h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Manage geographical farm plots, coordinate soil vectors, and oversee crop disease vulnerability.
+          <p className="text-sm text-slate-400 mt-0.5">
+            Manage geographical farm sectors, coordinate soil vectors, and oversee crop disease vulnerability.
           </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center space-x-2 bg-forest-800 hover:bg-forest-700 text-white font-bold text-xs px-4 py-2.5 rounded-lg shadow-sm transition-all self-start sm:self-auto"
+          className="flex items-center space-x-2 bg-gradient-to-r from-forest-800 to-forest-700 hover:from-forest-700 hover:to-forest-600 border border-neon-mint/40 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-[0_0_20px_rgba(0,255,135,0.25)] transition-all self-start sm:self-auto font-mono"
         >
-          <Plus className="w-4 h-4 text-mint-400" />
-          <span>Register New Plot</span>
+          <Plus className="w-4 h-4 text-neon-mint" />
+          <span>Register New Sector</span>
         </button>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white rounded-xl p-4 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div className="glass-panel-3d rounded-2xl p-4 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Search plot name or location..."
+            placeholder="Search sector name or location..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+            className="w-full bg-black/50 border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-neon-mint font-mono"
           />
         </div>
 
-        <div className="flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-          <span className="text-xs text-slate-500 font-bold shrink-0 mr-1">Crop:</span>
+        <div className="flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 font-mono">
+          <span className="text-xs text-slate-400 font-bold shrink-0 mr-1">Crop:</span>
           {['All', 'Tomato', 'Potato', 'Grapes', 'Wheat', 'Rice'].map((crop) => (
             <button
               key={crop}
               onClick={() => setSelectedCropFilter(crop)}
-              className={`px-3 py-1 rounded-md text-xs font-semibold transition-all shrink-0 ${
+              className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all shrink-0 ${
                 selectedCropFilter === crop
-                  ? 'bg-forest-800 text-white shadow-sm'
-                  : 'bg-slate-100 text-slate-600 hover:text-slate-900'
+                  ? 'bg-forest-800 text-neon-mint border border-neon-mint/40 shadow-[0_0_10px_rgba(0,255,135,0.3)]'
+                  : 'bg-black/30 text-slate-400 hover:text-white'
               }`}
             >
               {crop}
@@ -175,93 +171,93 @@ export default function FieldsPage() {
         onDelete={handleDeleteField} 
       />
 
-      {/* Modal: Register New Farm Plot */}
+      {/* Modal: Register New Farm Plot (3D Frosted Glass Modal) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white border border-slate-200 rounded-2xl p-6 max-w-md w-full shadow-2xl relative space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+          <div className="glass-panel-3d rounded-3xl p-6 max-w-md w-full shadow-2xl relative space-y-4 border border-white/15">
             
-            <div className="flex items-center justify-between pb-3 border-b border-slate-150">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center space-x-2">
-                <Sprout className="w-5 h-5 text-forest-700" />
-                <h3 className="text-base font-bold text-slate-900">Register Farm Plot</h3>
+                <Sprout className="w-5 h-5 text-neon-mint" />
+                <h3 className="text-base font-bold text-white font-mono">Register Farm Sector</h3>
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {formError && (
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700 font-medium">
+              <div className="p-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-xs text-rose-300 font-mono">
                 {formError}
               </div>
             )}
 
-            <form onSubmit={handleCreateField} className="space-y-3.5 text-xs">
+            <form onSubmit={handleCreateField} className="space-y-3.5 text-xs font-mono">
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Plot Name</label>
+                <label className="block font-bold text-slate-300 mb-1">Sector Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. South Ridge Tomato Sector 5"
                   value={newFieldName}
                   onChange={(e) => setNewFieldName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+                  className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Crop Category</label>
+                <label className="block font-bold text-slate-300 mb-1">Crop Category</label>
                 <select
                   value={newCropType}
                   onChange={(e) => setNewCropType(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+                  className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                 >
-                  <option value="Tomato">Tomato</option>
-                  <option value="Potato">Potato</option>
-                  <option value="Grapes">Grapes</option>
-                  <option value="Wheat">Wheat</option>
-                  <option value="Rice">Rice</option>
-                  <option value="Corn">Corn</option>
-                  <option value="Soybean">Soybean</option>
+                  <option value="Tomato" className="bg-slate-900">Tomato</option>
+                  <option value="Potato" className="bg-slate-900">Potato</option>
+                  <option value="Grapes" className="bg-slate-900">Grapes</option>
+                  <option value="Wheat" className="bg-slate-900">Wheat</option>
+                  <option value="Rice" className="bg-slate-900">Rice</option>
+                  <option value="Corn" className="bg-slate-900">Corn</option>
+                  <option value="Soybean" className="bg-slate-900">Soybean</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-700 mb-1">Geographical Location</label>
+                <label className="block font-bold text-slate-300 mb-1">Geographical Location</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Columbia Basin, Sector 4"
                   value={newLocation}
                   onChange={(e) => setNewLocation(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+                  className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Latitude</label>
+                  <label className="block font-bold text-slate-300 mb-1">Latitude</label>
                   <input
                     type="number"
                     step="any"
                     placeholder="e.g. 36.677"
                     value={newLatitude}
                     onChange={(e) => setNewLatitude(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+                    className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1">Longitude</label>
+                  <label className="block font-bold text-slate-300 mb-1">Longitude</label>
                   <input
                     type="number"
                     step="any"
                     placeholder="e.g. -121.655"
                     value={newLongitude}
                     onChange={(e) => setNewLongitude(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white font-medium"
+                    className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                   />
                 </div>
               </div>
@@ -270,16 +266,16 @@ export default function FieldsPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
+                  className="px-4 py-2 rounded-xl bg-black/40 hover:bg-white/10 text-slate-300 font-bold border border-white/10"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 rounded-lg bg-forest-800 hover:bg-forest-700 text-white font-bold shadow-sm"
+                  className="px-4 py-2 rounded-xl bg-forest-800 hover:bg-forest-700 text-white font-bold border border-neon-mint/40 shadow-[0_0_15px_rgba(0,255,135,0.25)]"
                 >
-                  {isSubmitting ? 'Registering...' : 'Register Plot'}
+                  {isSubmitting ? 'Registering...' : 'Register Sector'}
                 </button>
               </div>
             </form>

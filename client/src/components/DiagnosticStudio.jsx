@@ -10,15 +10,15 @@ import {
   Thermometer, 
   Droplets, 
   Clock, 
-  Wind,
-  Layers,
-  FileText,
-  Sliders,
-  CheckCircle2,
-  Cpu,
-  ChevronRight,
-  ShieldCheck,
-  Eye
+  Wind, 
+  Layers, 
+  FileText, 
+  Sliders, 
+  CheckCircle2, 
+  Cpu, 
+  ShieldCheck, 
+  Zap,
+  Scan 
 } from 'lucide-react';
 
 const PRESET_BENCHMARKS = [
@@ -33,7 +33,7 @@ const PRESET_BENCHMARKS = [
     windSpeed: 5.5,
     imageSrc: '/samples/tomato_late_blight.jpg',
     riskBadge: 'High Risk',
-    badgeColor: 'bg-rose-50 text-rose-700 border-rose-200'
+    badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
   },
   {
     title: 'Dry Spell Lesion (False Alarm Prevention)',
@@ -45,11 +45,11 @@ const PRESET_BENCHMARKS = [
     leafWetnessHours: 1.5,
     windSpeed: 7.0,
     imageSrc: '/samples/tomato_late_blight.jpg',
-    riskBadge: 'Alarm Suppressed',
-    badgeColor: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    riskBadge: 'Suppressed',
+    badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
   },
   {
-    title: 'Potato Early Blight (Target Rings)',
+    title: 'Potato Early Blight (Concentric Rings)',
     cropType: 'Potato',
     growthStage: 'Vegetative',
     symptomDescription: 'Concentric ring target lesions on mature leaves with yellow halo.',
@@ -59,20 +59,20 @@ const PRESET_BENCHMARKS = [
     windSpeed: 8.0,
     imageSrc: '/samples/potato_early_blight.jpg',
     riskBadge: 'Moderate',
-    badgeColor: 'bg-amber-50 text-amber-700 border-amber-200'
+    badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
   },
   {
     title: 'Grape Powdery Mildew (Vineyard Specimen)',
     cropType: 'Grapes',
     growthStage: 'Flowering',
-    symptomDescription: 'White powdery patches on adaxial leaf surface causing upward curling.',
+    symptomDescription: 'White powdery patches on adaxial leaf surface causing upward leaf curling.',
     temperature: 23.0,
     relativeHumidity: 85.0,
     leafWetnessHours: 6.5,
     windSpeed: 4.5,
     imageSrc: '/samples/grape_powdery_mildew.jpg',
     riskBadge: 'High Risk',
-    badgeColor: 'bg-rose-50 text-rose-700 border-rose-200'
+    badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
   }
 ];
 
@@ -195,7 +195,7 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
     setImageFile(null);
   };
 
-  // Execute diagnostic submission with multi-phase skeleton/spinner animation
+  // Execute diagnostic submission with multi-phase futuristic scanner animation
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -203,11 +203,11 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
     setProgressPercent(15);
 
     try {
-      setProgressStage('Ingesting high-resolution foliar image...');
+      setProgressStage('Holographic foliar ingestion & alignment...');
       await new Promise(r => setTimeout(r, 450));
       setProgressPercent(40);
 
-      setProgressStage('Evaluating visual pathology via Gemini 2.5 Flash...');
+      setProgressStage('Gemini 2.5 Flash neural visual pathology inference...');
       await new Promise(r => setTimeout(r, 650));
       setProgressPercent(70);
 
@@ -215,7 +215,7 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
       await new Promise(r => setTimeout(r, 450));
       setProgressPercent(90);
 
-      setProgressStage('Calibrating threshold-gated spray recommendations...');
+      setProgressStage('Calibrating threshold-gated intervention viability...');
 
       const formData = new FormData();
       formData.append('fieldId', String(selectedFieldId));
@@ -248,7 +248,6 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
       setProgressPercent(100);
       await new Promise(r => setTimeout(r, 300));
 
-      // Success: Navigate to advisory details
       navigate(`/advisory/${data.advisoryId}`);
     } catch (err) {
       console.error('Submission failed:', err);
@@ -260,37 +259,37 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       
-      {/* Enterprise Page Header */}
-      <div className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      {/* 3D Glassmorphic Studio Header */}
+      <div className="glass-panel-3d rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center space-x-2 text-xs font-bold text-forest-800 uppercase tracking-wider mb-1">
-            <Cpu className="w-4 h-4 text-forest-700" />
-            <span>Multimodal Diagnostic Studio</span>
+          <div className="flex items-center space-x-2 text-xs font-mono uppercase tracking-wider text-neon-mint mb-1">
+            <Cpu className="w-4 h-4 text-neon-mint" />
+            <span>Multimodal Neural Studio</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
-            Crop Pathology &amp; Risk Fusion Scanner
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-sans text-glow-mint">
+            3D Holographic Pathology &amp; Risk Scanner
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Analyze foliar imagery using Gemini multimodal intelligence, synchronized with hyper-local canopy humidity.
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+            Upload or capture foliar imagery. The neural vision pipeline executes Gemini multimodal symptom identification and dynamically computes micro-climatic sporulation thresholds.
           </p>
         </div>
 
         <div className="flex items-center space-x-2 self-start md:self-auto">
-          <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-forest-50 text-forest-800 border border-forest-200 text-xs font-semibold">
-            <ShieldCheck className="w-4 h-4 text-forest-700" />
+          <span className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-forest-900/80 border border-emerald-500/40 text-emerald-300 text-xs font-mono shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+            <ShieldCheck className="w-4 h-4 text-neon-mint" />
             <span>Zero False Alarms Calibrated</span>
           </span>
         </div>
       </div>
 
-      {/* Benchmark Specimen Quick Bar */}
-      <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center space-x-1.5">
-            <Layers className="w-4 h-4 text-forest-700" />
+      {/* 1-Click Benchmark Specimen Selector */}
+      <div className="glass-panel-3d rounded-2xl p-5 space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold flex items-center space-x-2">
+            <Layers className="w-4 h-4 text-neon-mint" />
             <span>1-Click Benchmark Test Specimens</span>
           </span>
-          <span className="text-xs text-slate-400">Click to instantly populate field parameters</span>
+          <span className="text-xs text-slate-400 font-mono">Instant Test Matrix</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {PRESET_BENCHMARKS.map((preset, idx) => (
@@ -298,17 +297,17 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
               key={idx}
               type="button"
               onClick={() => loadBenchmarkPreset(preset)}
-              className="text-left p-3.5 rounded-xl bg-slate-50 hover:bg-forest-50/50 hover:border-forest-600/50 border border-slate-200 transition-all group"
+              className="text-left p-3.5 rounded-xl glass-subpanel hover:border-neon-mint/50 border border-white/5 transition-all duration-300 group hover:scale-[1.02]"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="text-xs font-bold text-slate-800 group-hover:text-forest-800 transition-colors">
+                <span className="text-xs font-bold text-slate-200 group-hover:text-neon-mint transition-colors">
                   {preset.cropType} Specimen
                 </span>
                 <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${preset.badgeColor}`}>
                   {preset.riskBadge}
                 </span>
               </div>
-              <div className="text-[11px] text-slate-600 line-clamp-1 font-medium">
+              <div className="text-[11px] text-slate-400 line-clamp-1">
                 {preset.title}
               </div>
               <div className="flex items-center space-x-2 text-[10px] text-slate-500 mt-2 font-mono">
@@ -323,32 +322,32 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
         </div>
       </div>
 
-      {/* Main Form */}
+      {/* Main Diagnostic Form */}
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
-        {/* Left Column: Image Upload & Visual Evidence (5 cols) */}
+        {/* Left Column: Foliar Viewport with Holographic Laser Scanner (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-150">
-              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center space-x-2">
-                <Camera className="w-4 h-4 text-forest-700" />
-                <span>Visual Foliar Specimen</span>
+          <div className="glass-panel-3d rounded-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2 font-mono">
+                <Camera className="w-4 h-4 text-neon-mint" />
+                <span>Visual Foliar Viewport</span>
               </h3>
               <div>
                 {!isCameraActive ? (
                   <button
                     type="button"
                     onClick={startCamera}
-                    className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                    className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg bg-black/40 hover:bg-forest-900 border border-white/10 text-slate-200 transition-colors"
                   >
-                    <Camera className="w-3.5 h-3.5 text-forest-700" />
-                    <span>Open Camera</span>
+                    <Camera className="w-3.5 h-3.5 text-neon-mint" />
+                    <span>Live Cam</span>
                   </button>
                 ) : (
                   <button
                     type="button"
                     onClick={stopCamera}
-                    className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200"
+                    className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-rose-950/80 text-rose-300 border border-rose-500/50"
                   >
                     Close Cam
                   </button>
@@ -356,8 +355,18 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
               </div>
             </div>
 
-            {/* Viewfinder / Image Preview Box */}
-            <div className="relative aspect-video sm:aspect-square w-full rounded-xl overflow-hidden bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center">
+            {/* Specimen Viewport Container with Holographic Laser Scanning */}
+            <div className="relative aspect-video sm:aspect-square w-full rounded-xl overflow-hidden bg-black/80 border-2 border-white/10 flex items-center justify-center group shadow-2xl">
+              
+              {/* Laser scanning beam overlay */}
+              <div className="laser-scanner" />
+
+              {/* Viewport corner HUD crosshairs */}
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-neon-mint/60 pointer-events-none" />
+              <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-neon-mint/60 pointer-events-none" />
+              <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-neon-mint/60 pointer-events-none" />
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-neon-mint/60 pointer-events-none" />
+
               {isCameraActive ? (
                 <div className="w-full h-full relative">
                   <video 
@@ -369,24 +378,24 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   <button
                     type="button"
                     onClick={capturePhoto}
-                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-forest-800 hover:bg-forest-700 text-white font-bold text-xs px-4 py-2 rounded-full shadow-lg flex items-center space-x-1.5"
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-forest-800 hover:bg-forest-700 text-white font-bold text-xs px-4 py-2 rounded-full border border-neon-mint/40 shadow-[0_0_20px_rgba(0,255,135,0.4)] flex items-center space-x-1.5"
                   >
-                    <Camera className="w-4 h-4 text-mint-300" />
+                    <Camera className="w-4 h-4 text-neon-mint" />
                     <span>Capture Snapshot</span>
                   </button>
                 </div>
               ) : previewUrl ? (
-                <div className="relative w-full h-full group">
+                <div className="relative w-full h-full">
                   <img
                     src={previewUrl}
                     alt="Crop Foliar Preview"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-3">
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-3">
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="px-3 py-1.5 rounded-lg bg-white text-slate-900 text-xs font-bold shadow-md hover:bg-slate-100"
+                      className="px-3.5 py-2 rounded-xl bg-forest-800 border border-neon-mint/50 text-white text-xs font-bold shadow-lg hover:bg-forest-700"
                     >
                       Change Photo
                     </button>
@@ -395,13 +404,13 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
               ) : (
                 <div 
                   onClick={() => fileInputRef.current?.click()}
-                  className="cursor-pointer text-center p-6 space-y-2 hover:text-forest-700 transition-colors"
+                  className="cursor-pointer text-center p-6 space-y-2 hover:text-neon-mint transition-colors"
                 >
                   <UploadCloud className="w-10 h-10 mx-auto text-slate-400" />
-                  <div className="text-xs font-bold text-slate-700">
+                  <div className="text-xs font-bold text-slate-200">
                     Click to browse or drop foliar photo here
                   </div>
-                  <div className="text-[11px] text-slate-400">
+                  <div className="text-[11px] text-slate-500 font-mono">
                     Supports high-resolution JPEG, PNG, WebP up to 10MB
                   </div>
                 </div>
@@ -417,26 +426,26 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
               className="hidden"
             />
 
-            <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
-              <span>Model Pipeline:</span>
-              <span className="font-mono font-semibold text-forest-800">Gemini 2.5 Flash Multimodal</span>
+            <div className="flex items-center justify-between text-xs text-slate-400 pt-1 font-mono">
+              <span>Pipeline:</span>
+              <span className="font-semibold text-neon-mint">Gemini 2.5 Flash Vision</span>
             </div>
           </div>
         </div>
 
         {/* Right Column: Agronomic Metadata & Weather Sliders (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-sm space-y-5">
+          <div className="glass-panel-3d rounded-2xl p-6 space-y-5">
             
-            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center space-x-2 pb-3 border-b border-slate-150">
-              <Sliders className="w-4 h-4 text-forest-700" />
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2 pb-3 border-b border-white/10 font-mono">
+              <Sliders className="w-4 h-4 text-neon-mint" />
               <span>Agronomic Metadata &amp; Environmental Vectors</span>
             </h3>
 
             {/* Farm Plot & Crop Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
                   Target Farm Plot
                 </label>
                 <select
@@ -450,35 +459,35 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                       setFieldLocation(match.location);
                     }
                   }}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white transition-all font-medium"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-medium"
                 >
                   {fields.map(f => (
-                    <option key={f.id} value={f.id}>
+                    <option key={f.id} value={f.id} className="bg-slate-900 text-white">
                       {f.name} ({f.crop_type})
                     </option>
                   ))}
                   {fields.length === 0 && (
-                    <option value="1">North Valley Tomato Plot A</option>
+                    <option value="1" className="bg-slate-900 text-white">North Valley Tomato Plot A</option>
                   )}
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
                   Crop Category
                 </label>
                 <select
                   value={cropType}
                   onChange={(e) => setCropType(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white transition-all font-medium"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-medium"
                 >
-                  <option value="Tomato">Tomato (Solanaceae)</option>
-                  <option value="Potato">Potato (Solanaceae)</option>
-                  <option value="Grapes">Grapes (Viticulture)</option>
-                  <option value="Wheat">Wheat (Cereals)</option>
-                  <option value="Rice">Rice (Cereals)</option>
-                  <option value="Corn">Corn (Cereals)</option>
-                  <option value="Soybean">Soybean (Legumes)</option>
+                  <option value="Tomato" className="bg-slate-900 text-white">Tomato (Solanaceae)</option>
+                  <option value="Potato" className="bg-slate-900 text-white">Potato (Solanaceae)</option>
+                  <option value="Grapes" className="bg-slate-900 text-white">Grapes (Viticulture)</option>
+                  <option value="Wheat" className="bg-slate-900 text-white">Wheat (Cereals)</option>
+                  <option value="Rice" className="bg-slate-900 text-white">Rice (Cereals)</option>
+                  <option value="Corn" className="bg-slate-900 text-white">Corn (Cereals)</option>
+                  <option value="Soybean" className="bg-slate-900 text-white">Soybean (Legumes)</option>
                 </select>
               </div>
             </div>
@@ -486,23 +495,23 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
             {/* Growth Stage & Location */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
                   Phenological Stage
                 </label>
                 <select
                   value={growthStage}
                   onChange={(e) => setGrowthStage(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white transition-all font-medium"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-medium"
                 >
-                  <option value="Vegetative">Vegetative Canopy</option>
-                  <option value="Flowering">Flowering / Inflorescence</option>
-                  <option value="Fruit Development">Fruit Development / Tuber Bulk</option>
-                  <option value="Maturation">Heading / Pre-Harvest</option>
+                  <option value="Vegetative" className="bg-slate-900 text-white">Vegetative Canopy</option>
+                  <option value="Flowering" className="bg-slate-900 text-white">Flowering / Inflorescence</option>
+                  <option value="Fruit Development" className="bg-slate-900 text-white">Fruit Development / Tuber Bulk</option>
+                  <option value="Maturation" className="bg-slate-900 text-white">Heading / Pre-Harvest</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
                   Field Location Coordinates
                 </label>
                 <input
@@ -510,53 +519,53 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   value={fieldLocation}
                   onChange={(e) => setFieldLocation(e.target.value)}
                   placeholder="e.g. Salinas Valley, Sector 12"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:border-forest-600 focus:bg-white transition-all font-medium"
+                  className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-medium"
                 />
               </div>
             </div>
 
-            {/* Symptom Pathology Notes */}
+            {/* Symptom Notes */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
                 Observed Symptom Pathology Notes
               </label>
               <textarea
                 rows="2"
                 value={symptomDescription}
                 onChange={(e) => setSymptomDescription(e.target.value)}
-                placeholder="Describe foliar lesion morphology, discoloration, concentric rings, or sporulation..."
-                className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-800 focus:outline-none focus:border-forest-600 focus:bg-white transition-all"
+                placeholder="Describe foliar lesion morphology, halos, or sporulation..."
+                className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-neon-mint transition-all"
               />
             </div>
 
             {/* Environmental Vector Sliders */}
-            <div className="pt-2 border-t border-slate-150 space-y-4">
+            <div className="pt-2 border-t border-white/10 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-200 font-mono">
                   Micro-Climatic Vector Overrides
                 </span>
                 {relativeHumidity > 85 && leafWetnessHours >= 6 && (
-                  <span className="text-[11px] font-bold text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-full border border-rose-300 flex items-center space-x-1 shadow-sm pulse-critical">
-                    <AlertTriangle className="w-3 h-3 text-rose-600" />
+                  <span className="text-[11px] font-bold text-rose-300 bg-rose-950/80 px-2.5 py-0.5 rounded-full border border-rose-500/50 flex items-center space-x-1 shadow-[0_0_15px_rgba(239,68,68,0.4)] pulse-critical-3d font-mono">
+                    <AlertTriangle className="w-3 h-3 text-rose-400" />
                     <span>Critical Sporulation Triggered</span>
                   </span>
                 )}
                 {relativeHumidity < 68 && leafWetnessHours < 3.5 && (
-                  <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-300 flex items-center space-x-1 shadow-sm">
-                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                  <span className="text-[11px] font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/50 flex items-center space-x-1 shadow-[0_0_15px_rgba(16,185,129,0.3)] font-mono">
+                    <CheckCircle2 className="w-3 h-3 text-neon-mint" />
                     <span>False Spray Alarm Suppression Active</span>
                   </span>
                 )}
               </div>
 
               {/* Temperature Slider */}
-              <div className="space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-slate-600 flex items-center space-x-1.5">
-                    <Thermometer className="w-4 h-4 text-amber-500" />
+              <div className="space-y-1 glass-subpanel p-3.5 rounded-xl border border-white/5">
+                <div className="flex justify-between text-xs font-mono font-semibold">
+                  <span className="text-slate-300 flex items-center space-x-1.5">
+                    <Thermometer className="w-4 h-4 text-amber-400" />
                     <span>Temperature</span>
                   </span>
-                  <span className="font-mono font-bold text-slate-900">{temperature}°C</span>
+                  <span className="font-bold text-amber-400">{temperature}°C</span>
                 </div>
                 <input
                   type="range"
@@ -565,18 +574,18 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   step="0.5"
                   value={temperature}
                   onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                  className="w-full accent-forest-700 cursor-pointer"
+                  className="w-full accent-amber-400 cursor-pointer"
                 />
               </div>
 
               {/* Relative Humidity Slider */}
-              <div className="space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-slate-600 flex items-center space-x-1.5">
-                    <Droplets className="w-4 h-4 text-sky-500" />
+              <div className="space-y-1 glass-subpanel p-3.5 rounded-xl border border-white/5">
+                <div className="flex justify-between text-xs font-mono font-semibold">
+                  <span className="text-slate-300 flex items-center space-x-1.5">
+                    <Droplets className="w-4 h-4 text-cyan-400" />
                     <span>Relative Humidity</span>
                   </span>
-                  <span className="font-mono font-bold text-sky-600">{relativeHumidity}% RH</span>
+                  <span className="font-bold text-cyan-400 text-glow-cyan">{relativeHumidity}% RH</span>
                 </div>
                 <input
                   type="range"
@@ -585,18 +594,18 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   step="1"
                   value={relativeHumidity}
                   onChange={(e) => setRelativeHumidity(parseFloat(e.target.value))}
-                  className="w-full accent-sky-600 cursor-pointer"
+                  className="w-full accent-cyan-400 cursor-pointer"
                 />
               </div>
 
               {/* Leaf Wetness Hours Slider */}
-              <div className="space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-slate-600 flex items-center space-x-1.5">
-                    <Clock className="w-4 h-4 text-teal-600" />
+              <div className="space-y-1 glass-subpanel p-3.5 rounded-xl border border-white/5">
+                <div className="flex justify-between text-xs font-mono font-semibold">
+                  <span className="text-slate-300 flex items-center space-x-1.5">
+                    <Clock className="w-4 h-4 text-teal-400" />
                     <span>Continuous Leaf Wetness</span>
                   </span>
-                  <span className="font-mono font-bold text-teal-700">{leafWetnessHours} Hours</span>
+                  <span className="font-bold text-teal-300">{leafWetnessHours} Hours</span>
                 </div>
                 <input
                   type="range"
@@ -605,18 +614,18 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   step="0.5"
                   value={leafWetnessHours}
                   onChange={(e) => setLeafWetnessHours(parseFloat(e.target.value))}
-                  className="w-full accent-teal-600 cursor-pointer"
+                  className="w-full accent-teal-400 cursor-pointer"
                 />
               </div>
 
               {/* Wind Speed Slider */}
-              <div className="space-y-1 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <div className="flex justify-between text-xs font-semibold">
-                  <span className="text-slate-600 flex items-center space-x-1.5">
-                    <Wind className="w-4 h-4 text-indigo-500" />
+              <div className="space-y-1 glass-subpanel p-3.5 rounded-xl border border-white/5">
+                <div className="flex justify-between text-xs font-mono font-semibold">
+                  <span className="text-slate-300 flex items-center space-x-1.5">
+                    <Wind className="w-4 h-4 text-indigo-400" />
                     <span>Wind Velocity</span>
                   </span>
-                  <span className="font-mono font-bold text-indigo-600">{windSpeed} km/h</span>
+                  <span className="font-bold text-indigo-300">{windSpeed} km/h</span>
                 </div>
                 <input
                   type="range"
@@ -625,46 +634,46 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   step="0.5"
                   value={windSpeed}
                   onChange={(e) => setWindSpeed(parseFloat(e.target.value))}
-                  className="w-full accent-indigo-600 cursor-pointer"
+                  className="w-full accent-indigo-400 cursor-pointer"
                 />
               </div>
             </div>
 
             {/* Error Message */}
             {errorMessage && (
-              <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs text-rose-700 font-medium">
+              <div className="p-3 bg-rose-950/80 border border-rose-500/50 rounded-xl text-xs text-rose-300 font-mono">
                 {errorMessage}
               </div>
             )}
 
-            {/* Submit Action & Multi-Phase Skeleton Loader */}
+            {/* Submit Action & Futuristic Multi-Phase Laser Loader */}
             <div className="pt-2">
               {isSubmitting ? (
-                <div className="bg-slate-50 rounded-xl p-4 border border-forest-200 space-y-3 shadow-inner">
-                  <div className="flex items-center justify-between text-xs font-bold text-forest-800">
+                <div className="glass-subpanel rounded-2xl p-4 border border-neon-mint/30 space-y-3 shadow-[0_0_30px_rgba(0,255,135,0.2)]">
+                  <div className="flex items-center justify-between text-xs font-bold text-neon-mint font-mono">
                     <span className="flex items-center space-x-2">
-                      <RefreshCw className="w-4 h-4 animate-spin text-forest-700" />
+                      <RefreshCw className="w-4 h-4 animate-spin text-neon-mint" />
                       <span>{progressStage}</span>
                     </span>
-                    <span className="font-mono">{progressPercent}%</span>
+                    <span>{progressPercent}%</span>
                   </div>
-                  {/* Shimmer progress bar */}
-                  <div className="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                  {/* Glowing progress bar */}
+                  <div className="w-full bg-black/60 h-2.5 rounded-full overflow-hidden border border-white/10 p-0.5">
                     <div 
-                      className="h-full bg-forest-800 transition-all duration-300"
+                      className="h-full rounded-full bg-gradient-to-r from-forest-700 via-neon-mint to-cyan-400 transition-all duration-300 shadow-[0_0_15px_#00FF87]"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
-                  <div className="text-[11px] text-slate-500 text-center font-mono">
-                    Executing Gemini 2.5 multimodal diagnostic &amp; calibrated risk fusion
+                  <div className="text-[11px] text-slate-400 text-center font-mono">
+                    Synthesizing multimodal plant pathology with micro-climatic vectors
                   </div>
                 </div>
               ) : (
                 <button
                   type="submit"
-                  className="w-full py-3.5 px-6 rounded-xl bg-forest-800 hover:bg-forest-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center space-x-2 group"
+                  className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-forest-800 via-forest-700 to-forest-800 hover:from-forest-700 hover:to-forest-600 border border-neon-mint/40 text-white font-extrabold text-sm shadow-[0_0_25px_rgba(0,255,135,0.25)] hover:shadow-[0_0_35px_rgba(0,255,135,0.4)] transition-all flex items-center justify-center space-x-2 group hover:scale-[1.01]"
                 >
-                  <Sparkles className="w-4 h-4 text-mint-400 group-hover:scale-110 transition-transform" />
+                  <Sparkles className="w-4 h-4 text-neon-mint group-hover:scale-120 transition-transform" />
                   <span>Execute Multimodal AI Diagnostic &amp; Risk Fusion</span>
                 </button>
               )}

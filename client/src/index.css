@@ -4,65 +4,133 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans min-h-screen selection:bg-emerald-600 selection:text-white;
-    background-color: #F8FAFC;
+    @apply bg-[#081711] text-slate-100 font-sans min-h-screen selection:bg-emerald-500 selection:text-black;
+    background-color: #081711;
     background-image: 
-      radial-gradient(at 0% 0%, rgba(27, 77, 62, 0.04) 0px, transparent 50%),
-      radial-gradient(at 100% 100%, rgba(46, 139, 87, 0.03) 0px, transparent 50%);
+      radial-gradient(circle at 15% 15%, rgba(27, 77, 62, 0.45) 0%, transparent 55%),
+      radial-gradient(circle at 85% 85%, rgba(15, 46, 34, 0.55) 0%, transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 75%),
+      linear-gradient(rgba(8, 23, 17, 0.85) 0%, rgba(8, 23, 17, 0.95) 100%);
+    background-attachment: fixed;
   }
 }
 
-/* Custom Clean Scrollbars */
+/* Custom 3D Frosted Glass Panels */
+.glass-panel-3d {
+  background: linear-gradient(135deg, rgba(27, 77, 62, 0.28) 0%, rgba(15, 46, 34, 0.45) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-3d:hover {
+  border-color: rgba(0, 255, 135, 0.3);
+  transform: translateY(-4px) scale(1.008);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 255, 135, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-subpanel {
+  background: rgba(10, 30, 22, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 3D Isometric Viewport Container */
+.isometric-container {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.isometric-grid {
+  transform: rotateX(24deg) rotateZ(-12deg);
+  transition: transform 0.5s ease;
+}
+
+.isometric-grid:hover {
+  transform: rotateX(18deg) rotateZ(-8deg);
+}
+
+/* Holographic Laser Scan Line Animation */
+@keyframes laserScan {
+  0% {
+    top: 0%;
+    opacity: 0.9;
+  }
+  50% {
+    top: 96%;
+    opacity: 1;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.9;
+  }
+}
+
+.laser-scanner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #00FF87 50%, transparent 100%);
+  box-shadow: 0 0 15px #00FF87, 0 0 30px #00FF87;
+  animation: laserScan 2.4s infinite ease-in-out;
+  pointer-events: none;
+}
+
+/* Glowing Radar Beacon Animations */
+@keyframes pulseGlowRed {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6), 0 0 15px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0), 0 0 30px rgba(239, 68, 68, 0.7);
+  }
+}
+
+.pulse-critical-3d {
+  animation: pulseGlowRed 1.8s infinite;
+}
+
+@keyframes pulseGlowMint {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 135, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 255, 135, 0);
+  }
+}
+
+.pulse-mint-3d {
+  animation: pulseGlowMint 2.2s infinite;
+}
+
+/* Neon Text Glow */
+.text-glow-mint {
+  text-shadow: 0 0 12px rgba(0, 255, 135, 0.6);
+}
+
+.text-glow-red {
+  text-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+}
+
+.text-glow-cyan {
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+}
+
+/* Custom Clean Dark Scrollbars */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F1F5F9;
+  background: #081711;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #1B4D3E;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
-}
-
-/* Skeleton Loading Shimmer */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.skeleton-shimmer {
-  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.6s infinite ease-in-out;
-}
-
-/* Enterprise Card Utility */
-.enterprise-card {
-  @apply bg-white border border-slate-200/80 rounded-xl shadow-sm transition-all duration-200;
-}
-
-.enterprise-card-hover {
-  @apply hover:border-forest-600/40 hover:shadow-md;
-}
-
-/* Pulse Glows */
-@keyframes pulseGlowRed {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
-  }
-}
-
-.pulse-critical {
-  animation: pulseGlowRed 2s infinite;
+  background: #2E8B57;
 }

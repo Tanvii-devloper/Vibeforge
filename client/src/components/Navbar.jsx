@@ -8,9 +8,9 @@ import {
   ScanLine, 
   ShieldCheck, 
   Radio, 
-  ChevronDown,
-  Menu,
-  X
+  Menu, 
+  X,
+  Sparkles
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -31,28 +31,32 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
+    <header className="sticky top-0 z-50 bg-[#081711]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
           {/* Brand Logo & Title */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-forest-800 flex items-center justify-center text-white shadow-md shadow-forest-900/10 group-hover:bg-forest-700 transition-colors">
-              <Sprout className="w-5 h-5 text-mint-400" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-forest-800 to-forest-900 border border-neon-mint/30 flex items-center justify-center text-white shadow-[0_0_20px_rgba(0,255,135,0.25)] group-hover:scale-105 transition-all">
+              <Sprout className="w-5 h-5 text-neon-mint" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-lg text-slate-900 tracking-tight font-sans">AgriGuard</span>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-forest-50 text-forest-800 border border-forest-200">
-                  ENTERPRISE
+                <span className="font-extrabold text-lg text-white tracking-tight font-sans text-glow-mint">
+                  AgriGuard
+                </span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-forest-800/80 text-neon-mint border border-neon-mint/30 shadow-[0_0_10px_rgba(0,255,135,0.2)] font-mono">
+                  3D CONTROL
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 font-medium tracking-wide">Micro-Climatic Pathology Platform</p>
+              <p className="text-[10px] text-slate-400 font-medium tracking-wider uppercase font-mono">
+                Micro-Climatic Defense System
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-1">
+          {/* Desktop Navigation Links (Floating Glass Pill) */}
+          <nav className="hidden md:flex items-center space-x-1.5 bg-black/40 p-1.5 rounded-xl border border-white/10 backdrop-blur-md">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const active = isActive(link.path);
@@ -60,13 +64,13 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                  className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
                     active
-                      ? 'bg-forest-800 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-gradient-to-r from-forest-800 to-forest-700 text-white border border-neon-mint/40 shadow-[0_0_15px_rgba(0,255,135,0.25)]'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? 'text-mint-300' : 'text-slate-500'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${active ? 'text-neon-mint' : 'text-slate-400'}`} />
                   <span>{link.name}</span>
                 </Link>
               );
@@ -75,20 +79,20 @@ export default function Navbar() {
 
           {/* Right Status Badges & Quick Action */}
           <div className="hidden sm:flex items-center space-x-3">
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-forest-900/60 border border-emerald-500/30 text-xs text-emerald-300 font-mono shadow-[0_0_15px_rgba(16,185,129,0.15)]">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint-500 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-forest-600"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-mint opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
               </span>
-              <span className="font-mono text-slate-600">IoT Hub: Active</span>
+              <span>Canopy IoT: Active</span>
             </div>
 
             <Link
               to="/diagnose"
-              className="flex items-center space-x-1.5 bg-forest-800 hover:bg-forest-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm hover:shadow transition-all"
+              className="flex items-center space-x-1.5 bg-gradient-to-r from-forest-800 to-forest-700 hover:from-forest-700 hover:to-forest-600 border border-neon-mint/40 text-white text-xs font-bold px-4 py-2 rounded-xl shadow-[0_0_20px_rgba(0,255,135,0.25)] transition-all hover:scale-102"
             >
-              <ScanLine className="w-4 h-4 text-mint-400" />
-              <span>Run Diagnostic Scan</span>
+              <ScanLine className="w-4 h-4 text-neon-mint" />
+              <span>Laser Diagnostic Scan</span>
             </Link>
           </div>
 
@@ -96,7 +100,7 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
+              className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 focus:outline-none"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -106,7 +110,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1.5 shadow-lg">
+        <div className="md:hidden bg-[#081711]/95 backdrop-blur-2xl border-b border-white/10 px-4 pt-2 pb-4 space-y-1.5 shadow-2xl">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.path);
@@ -117,23 +121,23 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold ${
                   active
-                    ? 'bg-forest-800 text-white'
-                    : 'text-slate-700 hover:bg-slate-100'
+                    ? 'bg-forest-800 text-white border border-neon-mint/30'
+                    : 'text-slate-300 hover:bg-white/5'
                 }`}
               >
-                <Icon className={`w-5 h-5 ${active ? 'text-mint-300' : 'text-slate-500'}`} />
+                <Icon className={`w-5 h-5 ${active ? 'text-neon-mint' : 'text-slate-400'}`} />
                 <span>{link.name}</span>
               </Link>
             );
           })}
-          <div className="pt-2 border-t border-slate-150">
+          <div className="pt-2 border-t border-white/10">
             <Link
               to="/diagnose"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center space-x-2 w-full py-2.5 bg-forest-800 text-white text-sm font-bold rounded-lg shadow-sm"
+              className="flex items-center justify-center space-x-2 w-full py-2.5 bg-forest-800 text-white text-sm font-bold rounded-lg border border-neon-mint/30 shadow-[0_0_15px_rgba(0,255,135,0.25)]"
             >
-              <ScanLine className="w-4 h-4 text-mint-400" />
-              <span>Run Diagnostic Scan</span>
+              <ScanLine className="w-4 h-4 text-neon-mint" />
+              <span>Launch Laser Scan</span>
             </Link>
           </div>
         </div>

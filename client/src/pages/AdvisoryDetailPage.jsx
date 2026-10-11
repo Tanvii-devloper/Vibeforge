@@ -3,17 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Printer, 
-  Share2, 
   ScanLine, 
   AlertTriangle, 
   ShieldCheck, 
   MapPin, 
   Activity, 
-  Droplets, 
-  Thermometer, 
-  Clock,
   Sparkles,
-  ExternalLink
+  Radio 
 } from 'lucide-react';
 import AdvisoryCard from '../components/AdvisoryCard';
 import RiskFusionChart from '../components/RiskFusionChart';
@@ -50,21 +46,21 @@ export default function AdvisoryDetailPage() {
   if (isLoading) {
     return (
       <div className="h-96 flex flex-col items-center justify-center space-y-4">
-        <div className="w-10 h-10 border-4 border-forest-800 border-t-transparent rounded-full animate-spin"></div>
-        <p className="text-sm text-slate-500 font-mono">Synthesizing predictive advisory &amp; risk fusion models...</p>
+        <div className="w-10 h-10 border-4 border-neon-mint border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-sm text-neon-mint font-mono">Synthesizing 3D predictive advisory &amp; risk fusion models...</p>
       </div>
     );
   }
 
   if (error || !data) {
     return (
-      <div className="max-w-xl mx-auto my-12 bg-white rounded-2xl p-8 border border-slate-200 text-center space-y-4 shadow-sm">
+      <div className="max-w-xl mx-auto my-12 glass-panel-3d rounded-2xl p-8 border border-rose-500/30 text-center space-y-4">
         <AlertTriangle className="w-12 h-12 text-rose-500 mx-auto" />
-        <h2 className="text-xl font-bold text-slate-900">Advisory Record Unavailable</h2>
-        <p className="text-sm text-slate-500">{error || 'Could not retrieve advisory data'}</p>
+        <h2 className="text-xl font-bold text-white">Advisory Record Unavailable</h2>
+        <p className="text-sm text-slate-400">{error || 'Could not retrieve advisory data'}</p>
         <Link
           to="/"
-          className="inline-flex items-center space-x-2 bg-forest-800 hover:bg-forest-700 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow-sm"
+          className="inline-flex items-center space-x-2 bg-forest-800 hover:bg-forest-700 text-white px-4 py-2 rounded-xl text-sm font-semibold border border-neon-mint/30"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Return to Dashboard</span>
@@ -79,44 +75,44 @@ export default function AdvisoryDetailPage() {
     <div className="max-w-7xl mx-auto space-y-6 pb-12">
       
       {/* Top Navigation & Action Controls */}
-      <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="glass-panel-3d rounded-2xl p-5 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-3.5">
           <Link
             to="/"
-            className="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+            className="p-2.5 rounded-xl bg-black/40 hover:bg-white/10 text-slate-300 transition-colors border border-white/10"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-mono uppercase text-forest-800 font-bold tracking-wider">
+              <span className="text-xs font-mono uppercase text-neon-mint font-bold tracking-wider">
                 Advisory Plan #{advisory.id}
               </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-xs text-slate-500 font-mono">
+              <span className="text-slate-500">•</span>
+              <span className="text-xs text-slate-400 font-mono">
                 {new Date(advisory.createdAt).toLocaleDateString()} at {new Date(advisory.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-0.5 text-glow-mint">
               {diagnostic.detectedDisease}
             </h1>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2.5 self-end sm:self-auto">
+        <div className="flex items-center space-x-2.5 self-end sm:self-auto font-mono">
           <button
             onClick={() => window.print()}
-            className="flex items-center space-x-1.5 px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 transition-colors"
+            className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-black/40 hover:bg-white/10 text-xs font-bold text-slate-200 border border-white/10 transition-colors"
           >
-            <Printer className="w-4 h-4 text-slate-500" />
+            <Printer className="w-4 h-4 text-slate-400" />
             <span>Print Report</span>
           </button>
 
           <Link
             to={`/diagnose?fieldId=${field.id}&cropType=${encodeURIComponent(field.cropType)}`}
-            className="flex items-center space-x-1.5 px-4 py-2 rounded-lg bg-forest-800 hover:bg-forest-700 text-white text-xs font-bold shadow-sm transition-all"
+            className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-forest-800 hover:bg-forest-700 text-white text-xs font-bold border border-neon-mint/40 shadow-[0_0_15px_rgba(0,255,135,0.25)] transition-all"
           >
-            <ScanLine className="w-4 h-4 text-mint-400" />
+            <ScanLine className="w-4 h-4 text-neon-mint" />
             <span>Scan Another Specimen</span>
           </Link>
         </div>
@@ -129,18 +125,19 @@ export default function AdvisoryDetailPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Specimen Visual & Pathology Diagnostic (5 cols) */}
-        <div className="lg:col-span-5 bg-white rounded-xl p-5 border border-slate-200/90 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-150">
-            <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-forest-700" />
+        <div className="lg:col-span-5 glass-panel-3d rounded-2xl p-5 border border-white/10 space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2 font-mono">
+              <Sparkles className="w-4 h-4 text-neon-mint" />
               <span>Diagnostic Precision Profile</span>
             </h3>
-            <span className="text-xs font-mono font-bold text-forest-800 bg-forest-50 px-2 py-0.5 rounded border border-forest-200">
+            <span className="text-xs font-mono font-bold text-neon-mint bg-forest-900/80 px-2.5 py-1 rounded-lg border border-neon-mint/30 shadow-[0_0_10px_rgba(0,255,135,0.2)]">
               Confidence: {diagnostic.diagnosticConfidence}%
             </span>
           </div>
 
-          <div className="aspect-video sm:aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+          <div className="aspect-video sm:aspect-square rounded-xl overflow-hidden bg-black/80 border border-white/10 relative shadow-2xl">
+            <div className="laser-scanner" />
             <img
               src={diagnostic.imageUrl}
               alt="Foliar Pathology Specimen"
@@ -148,22 +145,22 @@ export default function AdvisoryDetailPage() {
             />
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 font-mono">
             <div>
-              <div className="text-[11px] font-mono uppercase text-slate-500 font-bold">Target Specimen / Plot</div>
-              <div className="text-sm font-bold text-slate-900 flex items-center space-x-1.5 mt-0.5">
+              <div className="text-[10px] uppercase text-slate-500 font-bold">Target Specimen / Plot</div>
+              <div className="text-sm font-bold text-white flex items-center space-x-1.5 mt-0.5">
                 <span>{field.name}</span>
-                <span className="text-xs text-slate-500">({field.cropType})</span>
+                <span className="text-xs text-slate-400">({field.cropType})</span>
               </div>
-              <div className="text-xs text-slate-500 flex items-center space-x-1 mt-0.5">
-                <MapPin className="w-3.5 h-3.5 text-slate-400" />
+              <div className="text-xs text-slate-400 flex items-center space-x-1 mt-0.5">
+                <MapPin className="w-3.5 h-3.5 text-slate-500" />
                 <span>{field.location}</span>
               </div>
             </div>
 
             <div>
-              <div className="text-[11px] font-mono uppercase text-slate-500 font-bold">Pathology Symptoms &amp; Morphology</div>
-              <p className="text-xs text-slate-700 leading-relaxed mt-1 bg-slate-50 p-3 rounded-lg border border-slate-200 font-medium">
+              <div className="text-[10px] uppercase text-slate-500 font-bold">Pathology Symptoms &amp; Morphology</div>
+              <p className="text-xs text-slate-200 leading-relaxed mt-1 glass-subpanel p-3.5 rounded-xl border border-white/5 font-sans">
                 {diagnostic.symptomSummary}
               </p>
             </div>

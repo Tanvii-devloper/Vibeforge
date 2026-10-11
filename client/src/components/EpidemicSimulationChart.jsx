@@ -20,21 +20,21 @@ export default function EpidemicSimulationChart({ simulationData = [], summary =
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-lg text-xs space-y-1.5 min-w-[210px]">
-          <div className="font-bold text-slate-900 border-b border-slate-100 pb-1.5">
-            Simulation Timeline: {label}
+        <div className="bg-[#081711]/95 border border-white/10 p-3.5 rounded-xl shadow-2xl backdrop-blur-xl text-xs space-y-1.5 min-w-[210px] font-mono">
+          <div className="font-bold text-slate-200 border-b border-white/10 pb-1.5">
+            Simulation: {label}
           </div>
-          <div className="text-rose-600 flex items-center justify-between gap-4 font-medium">
+          <div className="text-rose-400 flex items-center justify-between gap-4">
             <span>Unmanaged Spread:</span>
-            <span className="font-mono font-bold">{payload.find(p => p.dataKey === 'unmanaged')?.value}% canopy</span>
+            <span className="font-bold text-glow-red">{payload.find(p => p.dataKey === 'unmanaged')?.value}%</span>
           </div>
-          <div className="text-amber-600 flex items-center justify-between gap-4 font-medium">
+          <div className="text-amber-400 flex items-center justify-between gap-4">
             <span>Delayed Standard:</span>
-            <span className="font-mono font-bold">{payload.find(p => p.dataKey === 'standardTreatment')?.value}% canopy</span>
+            <span className="font-bold">{payload.find(p => p.dataKey === 'standardTreatment')?.value}%</span>
           </div>
-          <div className="text-forest-800 flex items-center justify-between gap-4 font-medium">
+          <div className="text-neon-mint flex items-center justify-between gap-4">
             <span>Calibrated Early Warning:</span>
-            <span className="font-mono font-bold">{payload.find(p => p.dataKey === 'calibratedIntervention')?.value}% canopy</span>
+            <span className="font-bold text-glow-mint">{payload.find(p => p.dataKey === 'calibratedIntervention')?.value}%</span>
           </div>
         </div>
       );
@@ -43,28 +43,34 @@ export default function EpidemicSimulationChart({ simulationData = [], summary =
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 border border-slate-200/90 shadow-sm">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-slate-150">
+    <div className="glass-panel-3d rounded-2xl p-6 relative overflow-hidden">
+      
+      {/* Background glow */}
+      <div className="absolute top-0 right-1/3 w-80 h-80 bg-forest-800/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-white/10 relative z-10">
         <div>
           <div className="flex items-center space-x-2">
-            <TrendingUp className="w-5 h-5 text-forest-700" />
-            <h3 className="text-base font-bold text-slate-900">Epidemic Spread Modeling &amp; Canopy Protection</h3>
+            <TrendingUp className="w-5 h-5 text-neon-mint" />
+            <h3 className="text-base font-bold text-white font-sans text-glow-mint">
+              Epidemic Spread Modeling &amp; Canopy Protection
+            </h3>
           </div>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-400 mt-0.5">
             Secondary sporulation velocity and foliar protection curves across intervention regimes
           </p>
         </div>
 
         {/* Horizon Selector: 7, 14, 30 days */}
-        <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 self-start sm:self-auto">
+        <div className="flex items-center bg-black/50 p-1 rounded-xl border border-white/10 self-start sm:self-auto font-mono">
           {[7, 14, 30].map(h => (
             <button
               key={h}
               onClick={() => setHorizon(h)}
-              className={`px-3 py-1 rounded-md text-xs font-bold transition-all ${
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                 horizon === h
-                  ? 'bg-forest-800 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-forest-800 text-neon-mint border border-neon-mint/40 shadow-[0_0_12px_rgba(0,255,135,0.3)]'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               {h}-Day Horizon
@@ -73,56 +79,58 @@ export default function EpidemicSimulationChart({ simulationData = [], summary =
         </div>
       </div>
 
-      {/* Protective Yield Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-5">
-        <div className="bg-forest-50/70 border border-forest-200 p-4 rounded-xl flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-forest-800 text-mint-300 flex items-center justify-center shrink-0">
+      {/* Protective Yield Summary Cards (Floating Glass Pods) */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5 relative z-10">
+        
+        <div className="glass-subpanel p-4 rounded-xl border border-emerald-500/30 flex items-center space-x-3.5 shadow-[0_0_20px_rgba(16,185,129,0.15)] group hover:scale-[1.02] transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-forest-900/80 text-neon-mint border border-neon-mint/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,255,135,0.25)]">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs text-forest-800 font-bold uppercase tracking-wider">Canopy Saved</div>
-            <div className="text-xl font-extrabold text-forest-900 font-mono mt-0.5">
+            <div className="text-[11px] text-emerald-400 font-bold uppercase tracking-wider font-mono">Canopy Saved</div>
+            <div className="text-2xl font-extrabold text-white font-mono mt-0.5 text-glow-mint">
               +{summary.canopySavedPercentage || '84.2'}%
             </div>
           </div>
         </div>
 
-        <div className="bg-sky-50/70 border border-sky-200 p-4 rounded-xl flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-sky-600 text-white flex items-center justify-center shrink-0">
+        <div className="glass-subpanel p-4 rounded-xl border border-cyan-500/30 flex items-center space-x-3.5 shadow-[0_0_20px_rgba(6,182,212,0.15)] group hover:scale-[1.02] transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-cyan-950/80 text-cyan-400 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(6,182,212,0.25)]">
             <Zap className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs text-sky-800 font-bold uppercase tracking-wider">Chemical Volume Reduced</div>
-            <div className="text-xl font-extrabold text-sky-900 font-mono mt-0.5">
+            <div className="text-[11px] text-cyan-400 font-bold uppercase tracking-wider font-mono">Chemical Volume Reduced</div>
+            <div className="text-2xl font-extrabold text-cyan-300 font-mono mt-0.5 text-glow-cyan">
               -{summary.chemicalReductionPct || '62.5'}%
             </div>
           </div>
         </div>
 
-        <div className="bg-amber-50/70 border border-amber-200 p-4 rounded-xl flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-amber-600 text-white flex items-center justify-center shrink-0">
+        <div className="glass-subpanel p-4 rounded-xl border border-amber-500/30 flex items-center space-x-3.5 shadow-[0_0_20px_rgba(245,158,11,0.15)] group hover:scale-[1.02] transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-amber-950/80 text-amber-400 border border-amber-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
             <AlertOctagon className="w-5 h-5" />
           </div>
           <div>
-            <div className="text-xs text-amber-800 font-bold uppercase tracking-wider">Yield Loss Averted</div>
-            <div className="text-xl font-extrabold text-amber-900 font-mono mt-0.5">
+            <div className="text-[11px] text-amber-400 font-bold uppercase tracking-wider font-mono">Yield Loss Averted</div>
+            <div className="text-2xl font-extrabold text-amber-300 font-mono mt-0.5">
               ~{summary.projectedLossAvertedKgPerHa || '15,200'} kg/ha
             </div>
           </div>
         </div>
+
       </div>
 
-      <div className="h-72 w-full">
+      <div className="h-72 w-full relative z-10">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={filteredData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-            <XAxis dataKey="day" stroke="#94A3B8" tick={{ fontSize: 11, fill: '#64748B' }} />
-            <YAxis domain={[0, 100]} stroke="#94A3B8" tick={{ fontSize: 11, fill: '#64748B' }} unit="%" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" vertical={false} />
+            <XAxis dataKey="day" stroke="#64748B" tick={{ fontSize: 11, fill: '#94A3B8' }} />
+            <YAxis domain={[0, 100]} stroke="#64748B" tick={{ fontSize: 11, fill: '#94A3B8' }} unit="%" />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
               verticalAlign="top" 
               height={36} 
-              wrapperStyle={{ fontSize: '11px', color: '#475569', fontWeight: 500 }} 
+              wrapperStyle={{ fontSize: '11px', color: '#94A3B8', fontFamily: 'monospace' }} 
             />
 
             {/* Unmanaged Epidemic Curve */}
@@ -150,10 +158,10 @@ export default function EpidemicSimulationChart({ simulationData = [], summary =
             <Line
               type="monotone"
               dataKey="calibratedIntervention"
-              name="Calibrated Early Warning (Micro-Climatic Gated)"
-              stroke="#1B4D3E"
+              name="Calibrated Early Warning"
+              stroke="#00FF87"
               strokeWidth={3.5}
-              dot={{ r: 3, fill: '#1B4D3E' }}
+              dot={{ r: 3, fill: '#00FF87' }}
             />
           </LineChart>
         </ResponsiveContainer>

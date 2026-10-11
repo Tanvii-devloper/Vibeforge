@@ -4,43 +4,44 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         forest: {
-          50: '#F2F7F5',
-          100: '#E2EFEA',
-          200: '#C5DFD5',
-          300: '#9ECA Oxide',
-          400: '#4F9E82',
-          500: '#2E8B57', // crisp mint/sea green
-          600: '#267449',
-          700: '#205E3C',
-          800: '#1B4D3E', // Deep Forest Green (Primary Brand)
-          900: '#153C30',
-          950: '#0B221B',
-        },
-        mint: {
-          50: '#F0FDF4',
-          100: '#DCFCE7',
-          200: '#BBF7D0',
-          300: '#86EFAC',
-          400: '#4ADE80',
+          50: '#F0F9F5',
+          100: '#D7EFE4',
+          200: '#B2DFC9',
+          300: '#83CAA8',
+          400: '#4FAF84',
           500: '#2E8B57',
-          600: '#16A34A',
-          700: '#15803D',
+          600: '#247046',
+          700: '#1D5A38',
+          800: '#1B4D3E', // Primary Forest
+          900: '#0F2E22', // Deep Forest Control Center
+          950: '#081711', // Deep Space Void
+        },
+        neon: {
+          mint: '#00FF87',
+          emerald: '#10B981',
+          cyan: '#00F0FF',
+          amber: '#FFB800',
+          rose: '#FF0055',
+          purple: '#B026FF'
         }
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace']
       },
       boxShadow: {
-        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.02)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
-        'elevated': '0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.04)',
-        'glow-mint': '0 0 15px rgba(46, 139, 87, 0.25)',
-        'glow-red': '0 0 15px rgba(239, 68, 68, 0.3)',
+        '3d': '0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.12)',
+        '3d-hover': '0 30px 60px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 255, 135, 0.25)',
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+        'glow-mint': '0 0 25px rgba(0, 255, 135, 0.45)',
+        'glow-red': '0 0 25px rgba(239, 68, 68, 0.55)',
+        'glow-amber': '0 0 25px rgba(245, 158, 11, 0.45)',
+        'glow-cyan': '0 0 25px rgba(0, 240, 255, 0.45)',
       }
     },
   },
