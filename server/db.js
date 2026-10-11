@@ -253,104 +253,146 @@ function simulateQuery(text, params) {
 
 function seedFallbackStore() {
   const f1 = memoryStore.insert('fields', {
-    name: 'North Valley Tomato Plot A',
-    crop_type: 'Tomato',
-    location: 'Salinas Valley, Sector 12',
-    latitude: 36.6777,
-    longitude: -121.6555
+    name: 'Maharashtra - Nashik Vineyard Plot A',
+    crop_type: 'Grapes',
+    location: 'Nashik / Pune (Maharashtra)',
+    latitude: 19.9975,
+    longitude: 73.7898
   });
   const f2 = memoryStore.insert('fields', {
-    name: 'East Ridge Potato Sector 4',
+    name: 'Punjab - Ludhiana Agro-Zone Sector 2',
     crop_type: 'Potato',
-    location: 'Columbia Basin, Plot B',
-    latitude: 46.2234,
-    longitude: -119.1235
+    location: 'Ludhiana / Amritsar (Punjab)',
+    latitude: 30.9010,
+    longitude: 75.8573
   });
   const f3 = memoryStore.insert('fields', {
-    name: 'Sunburst Wheat Field 2',
-    crop_type: 'Wheat',
-    location: 'Walla Walla Flats',
-    latitude: 46.0646,
-    longitude: -118.3430
+    name: 'West Bengal - Hooghly Delta Sector 1',
+    crop_type: 'Rice',
+    location: 'Hooghly / Burdwan (West Bengal)',
+    latitude: 22.8963,
+    longitude: 88.2461
   });
   const f4 = memoryStore.insert('fields', {
-    name: 'Valley Crest Grape Vineyard',
-    crop_type: 'Grapes',
-    location: 'Napa Valley Hillside',
-    latitude: 38.2975,
-    longitude: -122.2869
+    name: 'Madhya Pradesh - Malwa Plateau Sector 3',
+    crop_type: 'Soybean',
+    location: 'Indore / Bhopal (Madhya Pradesh)',
+    latitude: 22.7196,
+    longitude: 75.8577
+  });
+  const f5 = memoryStore.insert('fields', {
+    name: 'Gujarat - Saurashtra Cash Crop Belt',
+    crop_type: 'Cotton',
+    location: 'Anand / Rajkot (Gujarat)',
+    latitude: 22.5645,
+    longitude: 72.9289
+  });
+  const f6 = memoryStore.insert('fields', {
+    name: 'Uttar Pradesh - Gangetic Agro Plot',
+    crop_type: 'Sugarcane',
+    location: 'Lucknow / Varanasi (Uttar Pradesh)',
+    latitude: 26.8467,
+    longitude: 80.9462
+  });
+  const f7 = memoryStore.insert('fields', {
+    name: 'Haryana - Karnal Basmati Zone',
+    crop_type: 'Wheat',
+    location: 'Karnal / Hisar (Haryana)',
+    latitude: 29.6857,
+    longitude: 76.9905
+  });
+  const f8 = memoryStore.insert('fields', {
+    name: 'Karnataka - Belagavi Agro Cluster',
+    crop_type: 'Maize',
+    location: 'Belagavi / Dharwad (Karnataka)',
+    latitude: 15.8497,
+    longitude: 74.4977
   });
 
   // Diagnostics
   const d1 = memoryStore.insert('diagnostics', {
     field_id: f1.id,
-    image_url: '/samples/tomato_late_blight.jpg',
-    detected_disease: 'Late Blight (Phytophthora infestans)',
-    diagnostic_confidence: 94.5,
-    symptom_summary: 'Water-soaked irregular dark olive-brown lesions with pale chlorotic borders visible on leaf margins. High risk of rapid secondary zoospore sporulation.'
+    image_url: '/samples/grape_powdery_mildew.jpg',
+    detected_disease: 'Powdery Mildew (Erysiphe necator)',
+    diagnostic_confidence: 94.8,
+    symptom_summary: 'White powdery patches on adaxial leaf surface with upward curling. High sporulation risk across Nashik viticulture belt.'
   });
   const d2 = memoryStore.insert('diagnostics', {
     field_id: f2.id,
-    image_url: '/samples/potato_early_blight.jpg',
-    detected_disease: 'Early Blight (Alternaria solani)',
-    diagnostic_confidence: 88.0,
-    symptom_summary: 'Concentric ring target-like lesions on lower mature foliage with yellow halo. Moderate spore density.'
+    image_url: '/samples/tomato_late_blight.jpg',
+    detected_disease: 'Late Blight (Phytophthora infestans)',
+    diagnostic_confidence: 96.2,
+    symptom_summary: 'Water-soaked irregular dark olive-brown lesions on foliar margins under dense Punjab fog and cold morning dew.'
   });
   const d3 = memoryStore.insert('diagnostics', {
-    field_id: f4.id,
-    image_url: '/samples/grape_powdery_mildew.jpg',
-    detected_disease: 'Powdery Mildew (Erysiphe necator)',
-    diagnostic_confidence: 91.2,
-    symptom_summary: 'White talcum-powder like mycelial patches on adaxial leaf surface, curling upward along leaf edges.'
+    field_id: f3.id,
+    image_url: '/samples/potato_early_blight.jpg',
+    detected_disease: 'Rice Sheath Blight (Rhizoctonia solani)',
+    diagnostic_confidence: 91.5,
+    symptom_summary: 'Oval to elliptical greenish-gray lesions on leaf sheaths triggered by hyper-humid Gangetic delta micro-climate.'
   });
 
-  // Micro-climates
+  // Micro-climates (>85% RH triggers for fungal spore warnings)
   memoryStore.insert('micro_climates', {
     field_id: f1.id,
-    temperature: 18.5,
-    relative_humidity: 92.0,
-    leaf_wetness_hours: 9.5,
-    wind_speed: 5.4
+    temperature: 23.5,
+    relative_humidity: 89.0,
+    leaf_wetness_hours: 8.0,
+    wind_speed: 4.8
   });
   memoryStore.insert('micro_climates', {
     field_id: f2.id,
-    temperature: 24.0,
-    relative_humidity: 68.0,
-    leaf_wetness_hours: 3.5,
-    wind_speed: 8.2
+    temperature: 18.2,
+    relative_humidity: 94.5,
+    leaf_wetness_hours: 9.5,
+    wind_speed: 3.5
+  });
+  memoryStore.insert('micro_climates', {
+    field_id: f3.id,
+    temperature: 25.0,
+    relative_humidity: 96.0,
+    leaf_wetness_hours: 10.0,
+    wind_speed: 3.8
   });
   memoryStore.insert('micro_climates', {
     field_id: f4.id,
-    temperature: 23.5,
-    relative_humidity: 86.5,
-    leaf_wetness_hours: 7.0,
-    wind_speed: 4.8
+    temperature: 26.5,
+    relative_humidity: 86.0,
+    leaf_wetness_hours: 6.5,
+    wind_speed: 6.0
+  });
+  memoryStore.insert('micro_climates', {
+    field_id: f5.id,
+    temperature: 28.5,
+    relative_humidity: 85.5,
+    leaf_wetness_hours: 5.5,
+    wind_speed: 7.2
   });
 
   // Advisories
   memoryStore.insert('advisories', {
     diagnostic_id: d1.id,
-    risk_score: 87.5,
+    risk_score: 84.5,
     risk_level: 'High',
-    intervention_viability: 'Immediate Targeted Systemic Treatment',
-    treatment_recommendation: 'Apply systemic fungicide Mandipropamid (Revus) or Cyazofamid combined with protective Mancozeb. Ensure complete coverage on canopy underside. Pre-harvest interval (PHI): 14 days.',
-    optimal_spray_window: 'Next 12 to 24 hours before next precipitation event (06:00 - 10:00 local time under low wind)'
+    intervention_viability: 'Immediate Targeted Treatment Window',
+    treatment_recommendation: 'Rotate DMI fungicide (Myclobutanil) or sulfur-based suspension for Nashik vineyards. Ensure canopy airflow.',
+    optimal_spray_window: 'Next 12 to 24 hours before next humidity escalation (06:00 - 09:30 local time)'
   });
   memoryStore.insert('advisories', {
     diagnostic_id: d2.id,
-    risk_score: 48.0,
-    risk_level: 'Moderate',
-    intervention_viability: 'Preventive Bio-Fungicide Application',
-    treatment_recommendation: 'Apply Bacillus amyloliquefaciens (Serenade ASO) or copper hydroxide protective formulation. Re-evaluate leaf wetness trajectory in 48 hours.',
-    optimal_spray_window: 'Within next 48 hours during morning dry-down window (07:30 - 11:00)'
+    risk_score: 93.0,
+    risk_level: 'High',
+    intervention_viability: 'Urgent Critical Intervention Required',
+    treatment_recommendation: 'Deploy systemic translaminar Mandipropamid + Mancozeb protective tank mix. Severe Late Blight risk in Ludhiana/Amritsar fog corridor.',
+    optimal_spray_window: 'Immediate action within next 12 hours under low wind velocity'
   });
   memoryStore.insert('advisories', {
     diagnostic_id: d3.id,
-    risk_score: 72.0,
+    risk_score: 78.0,
     risk_level: 'High',
-    intervention_viability: 'Immediate Targeted Treatment',
-    treatment_recommendation: 'Rotate DMI fungicide (Myclobutanil) or sulfur-based suspension. Ensure vine canopy aeration through leaf pulling.',
-    optimal_spray_window: 'Apply within 24 hours under wind speed < 8 km/h'
+    intervention_viability: 'Targeted Sheath Blight Application',
+    treatment_recommendation: 'Apply Validamycin or Hexaconazole 5% SC. Drain excess stagnant water from paddy basins in Hooghly delta.',
+    optimal_spray_window: 'Within next 24 to 36 hours during morning dry-down interval'
   });
 }
 

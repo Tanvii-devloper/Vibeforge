@@ -191,6 +191,62 @@ function runExpertPathologyEngine(cropType, metadata = {}) {
     };
   }
 
+  if (crop.includes('cotton')) {
+    return {
+      detectedDisease: "Alternaria Macrospora Leaf Blight / Bollworm Vector",
+      diagnosticConfidence: 93.8,
+      symptomSummary: "Circular concentric necrotic spots on leaves with reddish-brown borders; boll bract damage and moisture-induced fungal sporulation.",
+      pathogenCategory: "Fungal",
+      riskAssessment: {
+        sporulationPotential: "High foliar conidial germination accelerated under RH > 85%",
+        recommendedAction: "Apply Propiconazole 25% EC or Copper Oxychloride spray. Monitor pheromone traps for Pink Bollworm vectors.",
+        sprayWindow: "Apply within 36 hours during morning spray window"
+      }
+    };
+  }
+
+  if (crop.includes('sugar') || crop.includes('cane')) {
+    return {
+      detectedDisease: "Sugarcane Red Rot (Colletotrichum falcatum)",
+      diagnosticConfidence: 92.5,
+      symptomSummary: "Third and fourth leaf drooping with red discolored midrib patches and longitudinal pith reddening with white horizontal bands.",
+      pathogenCategory: "Fungal",
+      riskAssessment: {
+        sporulationPotential: "Rapid mycelial spread through vascular vascular bundles under warm humid canopy",
+        recommendedAction: "Apply systemic Carbendazim or Thiophanate methyl sett treatment and foliar spray; eliminate waterlogged furrows.",
+        sprayWindow: "Within 48 hours to halt secondary spread"
+      }
+    };
+  }
+
+  if (crop.includes('onion')) {
+    return {
+      detectedDisease: "Purple Blotch (Alternaria porri)",
+      diagnosticConfidence: 94.2,
+      symptomSummary: "Sunken water-soaked lesions that turn purplish-brown with yellow borders along tubular leaves.",
+      pathogenCategory: "Fungal",
+      riskAssessment: {
+        sporulationPotential: "Severe spore multiplication when leaf wetness exceeds 7 hours in high humidity",
+        recommendedAction: "Apply Mancozeb 75% WP or Difenoconazole with agricultural sticker agent.",
+        sprayWindow: "Within 24 hours under low wind conditions"
+      }
+    };
+  }
+
+  if (crop.includes('groundnut') || crop.includes('peanut')) {
+    return {
+      detectedDisease: "Tikka Leaf Spot (Cercospora personata)",
+      diagnosticConfidence: 93.0,
+      symptomSummary: "Small circular dark brown to black spots without yellow halos on both leaf surfaces causing premature defoliation.",
+      pathogenCategory: "Fungal",
+      riskAssessment: {
+        sporulationPotential: "Airborne conidia release intensified by humid canopy micro-climate",
+        recommendedAction: "Apply Chlorothalonil or Carbendazim + Mancozeb combination.",
+        sprayWindow: "Within 36 hours during calm clear morning"
+      }
+    };
+  }
+
   // Default Legumes / Other
   return {
     detectedDisease: "Cercospora Leaf Spot (Cercospora spp.)",

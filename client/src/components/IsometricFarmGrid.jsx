@@ -18,51 +18,51 @@ export default function IsometricFarmGrid({ fields = [] }) {
   const [hoveredPlot, setHoveredPlot] = useState(null);
   const [selectedPlotId, setSelectedPlotId] = useState(1);
 
-  // Default plots if loading
+  // Default plots representing Indian Agricultural Sectors
   const plotList = fields.length > 0 ? fields : [
     {
       id: 1,
-      name: 'North Valley Tomato Plot A',
-      crop_type: 'Tomato',
-      location: 'Salinas Valley, Sector 12',
+      name: 'Maharashtra - Nashik Vineyard Plot A',
+      crop_type: 'Grapes',
+      location: 'Nashik / Pune (Maharashtra)',
       risk_level: 'High',
-      risk_score: 87.5,
-      temperature: 18.5,
-      relative_humidity: 92.0,
-      leaf_wetness_hours: 9.5
+      risk_score: 84.5,
+      temperature: 23.5,
+      relative_humidity: 89.0,
+      leaf_wetness_hours: 8.0
     },
     {
       id: 2,
-      name: 'East Ridge Potato Sector 4',
+      name: 'Punjab - Ludhiana Agro-Zone Sector 2',
       crop_type: 'Potato',
-      location: 'Columbia Basin, Plot B',
-      risk_level: 'Moderate',
-      risk_score: 48.0,
-      temperature: 24.0,
-      relative_humidity: 68.0,
-      leaf_wetness_hours: 3.5
+      location: 'Ludhiana / Amritsar (Punjab)',
+      risk_level: 'High',
+      risk_score: 93.0,
+      temperature: 18.2,
+      relative_humidity: 94.5,
+      leaf_wetness_hours: 9.5
     },
     {
       id: 3,
-      name: 'Sunburst Wheat Field 2',
-      crop_type: 'Wheat',
-      location: 'Walla Walla Flats',
-      risk_level: 'Low',
-      risk_score: 12.0,
-      temperature: 22.5,
-      relative_humidity: 65.0,
-      leaf_wetness_hours: 2.0
+      name: 'West Bengal - Hooghly Delta Sector 1',
+      crop_type: 'Rice',
+      location: 'Hooghly / Burdwan (West Bengal)',
+      risk_level: 'High',
+      risk_score: 78.0,
+      temperature: 25.0,
+      relative_humidity: 96.0,
+      leaf_wetness_hours: 10.0
     },
     {
       id: 4,
-      name: 'Valley Crest Grape Vineyard',
-      crop_type: 'Grapes',
-      location: 'Napa Valley Hillside',
-      risk_level: 'High',
-      risk_score: 72.0,
-      temperature: 23.5,
-      relative_humidity: 86.5,
-      leaf_wetness_hours: 7.0
+      name: 'Madhya Pradesh - Malwa Plateau Sector 3',
+      crop_type: 'Soybean',
+      location: 'Indore / Bhopal (Madhya Pradesh)',
+      risk_level: 'Moderate',
+      risk_score: 52.0,
+      temperature: 26.5,
+      relative_humidity: 86.0,
+      leaf_wetness_hours: 6.5
     }
   ];
 

@@ -18,28 +18,61 @@ import {
   Cpu, 
   ShieldCheck, 
   Zap,
-  Scan 
+  Scan,
+  MapPin,
+  Compass
 } from 'lucide-react';
+import { INDIAN_AGRICULTURAL_REGIONS, getRegionById, simulateMicroClimate } from '../data/indianRegions';
 
 const PRESET_BENCHMARKS = [
   {
-    title: 'Tomato Late Blight (High Vector)',
-    cropType: 'Tomato',
-    growthStage: 'Fruit Development',
-    symptomDescription: 'Water-soaked irregular dark olive-brown lesions on leaf margins with pale chlorotic halo.',
-    temperature: 19.5,
-    relativeHumidity: 92.0,
-    leafWetnessHours: 9.0,
-    windSpeed: 5.5,
+    title: 'Maharashtra: Nashik Vineyard Powdery Mildew',
+    regionId: 'maharashtra',
+    cropType: 'Grapes',
+    growthStage: 'Flowering',
+    symptomDescription: 'White talcum powdery mycelial patches on adaxial leaf surfaces causing upward leaf curling across Nashik vineyard belt.',
+    temperature: 23.5,
+    relativeHumidity: 89.0,
+    leafWetnessHours: 8.0,
+    windSpeed: 4.8,
+    imageSrc: '/samples/grape_powdery_mildew.jpg',
+    riskBadge: 'Critical Spore Vector',
+    badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
+  },
+  {
+    title: 'Punjab: Ludhiana Potato Late Blight (Fog Vector)',
+    regionId: 'punjab',
+    cropType: 'Potato',
+    growthStage: 'Vegetative',
+    symptomDescription: 'Water-soaked irregular dark olive-brown lesions spreading rapidly under dense Punjab fog and cold morning dew.',
+    temperature: 18.2,
+    relativeHumidity: 94.5,
+    leafWetnessHours: 9.5,
+    windSpeed: 3.5,
     imageSrc: '/samples/tomato_late_blight.jpg',
-    riskBadge: 'High Risk',
+    riskBadge: 'High Risk (Dense Fog)',
+    badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
+  },
+  {
+    title: 'West Bengal: Hooghly Paddy Sheath Blight',
+    regionId: 'west-bengal',
+    cropType: 'Rice',
+    growthStage: 'Vegetative',
+    symptomDescription: 'Elliptical diamond greenish-gray water-soaked lesions on leaf sheaths under hyper-humid Gangetic delta micro-climate.',
+    temperature: 25.0,
+    relativeHumidity: 96.0,
+    leafWetnessHours: 10.0,
+    windSpeed: 3.8,
+    imageSrc: '/samples/potato_early_blight.jpg',
+    riskBadge: 'Hyper-Humid Surge',
     badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
   },
   {
     title: 'Dry Spell Lesion (False Alarm Prevention)',
+    regionId: 'madhya-pradesh',
     cropType: 'Tomato',
     growthStage: 'Vegetative',
-    symptomDescription: 'Old brown lesions observed, but ambient conditions are dry and hot.',
+    symptomDescription: 'Old brown lesions observed, but ambient conditions are dry and warm. Safe spray window.',
     temperature: 28.0,
     relativeHumidity: 52.0,
     leafWetnessHours: 1.5,
@@ -47,32 +80,6 @@ const PRESET_BENCHMARKS = [
     imageSrc: '/samples/tomato_late_blight.jpg',
     riskBadge: 'Suppressed',
     badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.3)]'
-  },
-  {
-    title: 'Potato Early Blight (Concentric Rings)',
-    cropType: 'Potato',
-    growthStage: 'Vegetative',
-    symptomDescription: 'Concentric ring target lesions on mature leaves with yellow halo.',
-    temperature: 24.5,
-    relativeHumidity: 68.0,
-    leafWetnessHours: 4.0,
-    windSpeed: 8.0,
-    imageSrc: '/samples/potato_early_blight.jpg',
-    riskBadge: 'Moderate',
-    badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/50 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
-  },
-  {
-    title: 'Grape Powdery Mildew (Vineyard Specimen)',
-    cropType: 'Grapes',
-    growthStage: 'Flowering',
-    symptomDescription: 'White powdery patches on adaxial leaf surface causing upward leaf curling.',
-    temperature: 23.0,
-    relativeHumidity: 85.0,
-    leafWetnessHours: 6.5,
-    windSpeed: 4.5,
-    imageSrc: '/samples/grape_powdery_mildew.jpg',
-    riskBadge: 'High Risk',
-    badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-500/50 shadow-[0_0_12px_rgba(239,68,68,0.3)]'
   }
 ];
 
@@ -84,16 +91,17 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
 
   const [fields, setFields] = useState([]);
   const [selectedFieldId, setSelectedFieldId] = useState(initialFieldId || 1);
-  const [cropType, setCropType] = useState(initialCropType || 'Tomato');
+  const [selectedRegionId, setSelectedRegionId] = useState('maharashtra');
+  const [cropType, setCropType] = useState(initialCropType || 'Grapes');
   const [growthStage, setGrowthStage] = useState('Vegetative');
-  const [symptomDescription, setSymptomDescription] = useState('Water-soaked dark lesions spreading rapidly across foliar margins');
-  const [fieldLocation, setFieldLocation] = useState('Salinas Valley Plot A');
+  const [symptomDescription, setSymptomDescription] = useState('White powdery patches on adaxial leaf surface causing upward curling along leaf margins');
+  const [fieldLocation, setFieldLocation] = useState('Nashik / Pune (Maharashtra)');
 
-  // Micro-climatic sliders
-  const [temperature, setTemperature] = useState(19.5);
-  const [relativeHumidity, setRelativeHumidity] = useState(90.0);
+  // Micro-climatic sliders (default to Maharashtra Nashik simulated climate)
+  const [temperature, setTemperature] = useState(23.5);
+  const [relativeHumidity, setRelativeHumidity] = useState(89.0);
   const [leafWetnessHours, setLeafWetnessHours] = useState(8.0);
-  const [windSpeed, setWindSpeed] = useState(5.5);
+  const [windSpeed, setWindSpeed] = useState(4.8);
 
   // Image capture states
   const [imageFile, setImageFile] = useState(null);
@@ -181,8 +189,28 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
     }
   };
 
+  // Handle Indian Agricultural Region selection and micro-climate simulation
+  const handleRegionSelect = (regId, withVariance = false) => {
+    setSelectedRegionId(regId);
+    const reg = getRegionById(regId);
+    setFieldLocation(`${reg.hub} (${reg.state})`);
+    if (!reg.crops.map(c => c.toLowerCase()).some(c => cropType.toLowerCase().includes(c))) {
+      setCropType(reg.defaultCrop);
+    }
+    const sim = simulateMicroClimate(regId, { variance: withVariance });
+    setTemperature(sim.temperature);
+    setRelativeHumidity(sim.relativeHumidity);
+    setLeafWetnessHours(sim.leafWetnessHours);
+    setWindSpeed(sim.windSpeed);
+  };
+
   // Load a preset benchmark specimen
   const loadBenchmarkPreset = (preset) => {
+    if (preset.regionId) {
+      setSelectedRegionId(preset.regionId);
+      const reg = getRegionById(preset.regionId);
+      setFieldLocation(`${reg.hub} (${reg.state})`);
+    }
     setCropType(preset.cropType);
     setGrowthStage(preset.growthStage);
     setSymptomDescription(preset.symptomDescription);
@@ -439,14 +467,89 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
             
             <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-2 pb-3 border-b border-white/10 font-mono">
               <Sliders className="w-4 h-4 text-neon-mint" />
-              <span>Agronomic Metadata &amp; Environmental Vectors</span>
+              <span>Agronomic Metadata &amp; Micro-Climatic Simulation</span>
             </h3>
+
+            {/* Indian Agricultural Region & Micro-Climate Simulator */}
+            <div className="p-4 rounded-xl bg-forest-950/80 border border-emerald-500/30 space-y-3 shadow-inner">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <label className="text-xs font-bold text-neon-mint uppercase tracking-wider flex items-center space-x-2 font-mono">
+                  <MapPin className="w-4 h-4 text-neon-mint" />
+                  <span>Agricultural Region &amp; State (India Hubs)</span>
+                </label>
+                <button
+                  type="button"
+                  onClick={() => handleRegionSelect(selectedRegionId, true)}
+                  className="inline-flex items-center space-x-1.5 text-[11px] font-mono font-bold text-cyan-300 hover:text-white bg-cyan-950/80 hover:bg-cyan-900 px-3 py-1.5 rounded-lg border border-cyan-500/40 transition-all shadow-[0_0_10px_rgba(6,182,212,0.25)]"
+                  title="Simulate hyper-local canopy telemetry for this Indian agricultural hub"
+                >
+                  <RefreshCw className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Simulate Micro-Climate Telemetry</span>
+                </button>
+              </div>
+
+              <select
+                value={selectedRegionId}
+                onChange={(e) => handleRegionSelect(e.target.value, false)}
+                className="w-full bg-black/60 border border-emerald-500/40 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-semibold"
+              >
+                {INDIAN_AGRICULTURAL_REGIONS.map(reg => (
+                  <option key={reg.id} value={reg.id} className="bg-slate-900 text-white">
+                    {reg.label} — {reg.subtext}
+                  </option>
+                ))}
+              </select>
+
+              {/* Regional Telemetry & Crop Mapping Banner */}
+              {(() => {
+                const activeReg = getRegionById(selectedRegionId);
+                return (
+                  <div className="text-xs grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 font-mono">
+                    <div className="bg-black/50 p-2.5 rounded-xl border border-white/10 space-y-1.5">
+                      <div className="text-slate-400 text-[10px] uppercase font-bold flex items-center justify-between">
+                        <span>Regional Crops:</span>
+                        <span className="text-neon-mint font-bold">{activeReg.state}</span>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {activeReg.crops.map(c => (
+                          <button
+                            type="button"
+                            key={c} 
+                            onClick={() => setCropType(c)}
+                            className={`px-2.5 py-1 rounded-md text-xs border transition-all ${
+                              cropType.toLowerCase().includes(c.toLowerCase())
+                                ? 'bg-forest-800 text-neon-mint border-neon-mint/60 font-bold shadow-[0_0_10px_rgba(0,255,135,0.3)]'
+                                : 'bg-black/40 text-slate-300 border-white/10 hover:border-neon-mint/40 hover:text-white'
+                            }`}
+                          >
+                            {c}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-black/50 p-2.5 rounded-xl border border-white/10 space-y-1.5">
+                      <div className="text-slate-400 text-[10px] uppercase font-bold flex items-center justify-between">
+                        <span>Primary Vectors:</span>
+                        <span className="text-rose-400 font-bold">Spore Trigger</span>
+                      </div>
+                      <div className="text-[11px] text-slate-200 truncate font-semibold" title={activeReg.primaryPathogens.join(', ')}>
+                        {activeReg.primaryPathogens[0]}
+                      </div>
+                      <div className="text-[10px] text-amber-300/90 font-mono">
+                        Base: {activeReg.simulatedClimate.temperature}°C · {activeReg.simulatedClimate.relativeHumidity}% RH · {activeReg.simulatedClimate.leafWetnessHours}h Dew
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
 
             {/* Farm Plot & Crop Selector */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-300 mb-1.5 font-mono">
-                  Target Farm Plot
+                  Target Farm Plot / Sector
                 </label>
                 <select
                   value={selectedFieldId}
@@ -467,7 +570,7 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                     </option>
                   ))}
                   {fields.length === 0 && (
-                    <option value="1" className="bg-slate-900 text-white">North Valley Tomato Plot A</option>
+                    <option value="1" className="bg-slate-900 text-white">Maharashtra - Nashik Vineyard Plot A</option>
                   )}
                 </select>
               </div>
@@ -481,13 +584,17 @@ export default function DiagnosticStudio({ initialFieldId, initialCropType }) {
                   onChange={(e) => setCropType(e.target.value)}
                   className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-neon-mint transition-all font-medium"
                 >
+                  <option value="Grapes" className="bg-slate-900 text-white">Grapes (Viticulture)</option>
                   <option value="Tomato" className="bg-slate-900 text-white">Tomato (Solanaceae)</option>
                   <option value="Potato" className="bg-slate-900 text-white">Potato (Solanaceae)</option>
-                  <option value="Grapes" className="bg-slate-900 text-white">Grapes (Viticulture)</option>
+                  <option value="Onions" className="bg-slate-900 text-white">Onion (Alliaceae)</option>
                   <option value="Wheat" className="bg-slate-900 text-white">Wheat (Cereals)</option>
-                  <option value="Rice" className="bg-slate-900 text-white">Rice (Cereals)</option>
-                  <option value="Corn" className="bg-slate-900 text-white">Corn (Cereals)</option>
-                  <option value="Soybean" className="bg-slate-900 text-white">Soybean (Legumes)</option>
+                  <option value="Rice" className="bg-slate-900 text-white">Rice / Paddy (Cereals)</option>
+                  <option value="Sugarcane" className="bg-slate-900 text-white">Sugarcane (Cash Crop)</option>
+                  <option value="Cotton" className="bg-slate-900 text-white">Cotton (Fiber / Cash Crop)</option>
+                  <option value="Soybean" className="bg-slate-900 text-white">Soybean (Oilseeds)</option>
+                  <option value="Groundnuts" className="bg-slate-900 text-white">Groundnut (Oilseeds)</option>
+                  <option value="Maize" className="bg-slate-900 text-white">Maize / Corn (Cereals)</option>
                 </select>
               </div>
             </div>

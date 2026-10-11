@@ -14,16 +14,27 @@ import {
   Layers, 
   AlertTriangle, 
   Radio,
-  Cpu
+  Cpu,
+  MapPin,
+  RefreshCw
 } from 'lucide-react';
 import FieldTable from '../components/FieldTable';
 import WeatherSensorBadge from '../components/WeatherSensorBadge';
 import IsometricFarmGrid from '../components/IsometricFarmGrid';
+import { INDIAN_AGRICULTURAL_REGIONS, getRegionById, simulateMicroClimate } from '../data/indianRegions';
 
 export default function Dashboard() {
   const [fields, setFields] = useState([]);
   const [recentAdvisories, setRecentAdvisories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRegionId, setSelectedRegionId] = useState('maharashtra');
+  const [simulatedWeather, setSimulatedWeather] = useState(() => simulateMicroClimate('maharashtra'));
+
+  const handleRegionChange = (regId, withVariance = false) => {
+    setSelectedRegionId(regId);
+    const sim = simulateMicroClimate(regId, { variance: withVariance });
+    setSimulatedWeather(sim);
+  };
 
   useEffect(() => {
     Promise.all([
@@ -164,13 +175,62 @@ export default function Dashboard() {
         <IsometricFarmGrid fields={fields} />
       </div>
 
-      {/* Live Micro-Climatic Sensor Telemetry HUD */}
-      <div>
+      {/* Indian Agricultural Hub Selector & Live Micro-Climatic Sensor Telemetry HUD */}
+      <div className="space-y-3">
+        {/* Region Selector Bar */}
+        <div className="glass-panel-3d rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border border-white/10">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-forest-900/80 text-neon-mint flex items-center justify-center border border-neon-mint/30 shadow-[0_0_12px_rgba(0,255,135,0.2)]">
+              <MapPin className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-bold uppercase tracking-wider text-white font-mono">
+                  Select Indian Agricultural Region:
+                </span>
+                <span className="text-[10px] bg-emerald-950/80 text-neon-mint border border-neon-mint/30 px-2 py-0.5 rounded font-mono font-bold">
+                  8 Major Hubs
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                Simulating canopy micro-climate &amp; fungal spore triggers (&gt;85% RH) across India
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <select
+              value={selectedRegionId}
+              onChange={(e) => handleRegionChange(e.target.value, false)}
+              className="bg-black/60 border border-emerald-500/40 rounded-xl px-3 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-neon-mint font-semibold"
+            >
+              {INDIAN_AGRICULTURAL_REGIONS.map(reg => (
+                <option key={reg.id} value={reg.id} className="bg-slate-900 text-white">
+                  {reg.label} — {reg.subtext}
+                </option>
+              ))}
+            </select>
+
+            <button
+              onClick={() => handleRegionChange(selectedRegionId, true)}
+              className="inline-flex items-center space-x-1 bg-forest-800/80 hover:bg-forest-700 text-white text-xs font-mono font-bold px-3 py-2 rounded-xl border border-neon-mint/30 transition-all shadow-[0_0_10px_rgba(0,255,135,0.2)] whitespace-nowrap"
+              title="Trigger slight real-time sensor fluctuation"
+            >
+              <RefreshCw className="w-3.5 h-3.5 text-neon-mint" />
+              <span className="hidden sm:inline">Simulate Sensor</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Dynamic Telemetry HUD */}
         <WeatherSensorBadge 
-          temperature={21.5}
-          relativeHumidity={88.0}
-          leafWetnessHours={7.5}
-          windSpeed={5.8}
+          temperature={simulatedWeather.temperature}
+          relativeHumidity={simulatedWeather.relativeHumidity}
+          leafWetnessHours={simulatedWeather.leafWetnessHours}
+          windSpeed={simulatedWeather.windSpeed}
+          regionName={simulatedWeather.regionLabel}
+          regionHub={simulatedWeather.hub}
+          regionBadge={simulatedWeather.badge}
         />
       </div>
 

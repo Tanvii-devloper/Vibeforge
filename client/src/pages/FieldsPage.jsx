@@ -201,7 +201,7 @@ export default function FieldsPage() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. South Ridge Tomato Sector 5"
+                  placeholder="e.g. Maharashtra - Nashik Vineyard Plot A"
                   value={newFieldName}
                   onChange={(e) => setNewFieldName(e.target.value)}
                   className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
@@ -215,22 +215,26 @@ export default function FieldsPage() {
                   onChange={(e) => setNewCropType(e.target.value)}
                   className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"
                 >
-                  <option value="Tomato" className="bg-slate-900">Tomato</option>
-                  <option value="Potato" className="bg-slate-900">Potato</option>
-                  <option value="Grapes" className="bg-slate-900">Grapes</option>
-                  <option value="Wheat" className="bg-slate-900">Wheat</option>
-                  <option value="Rice" className="bg-slate-900">Rice</option>
-                  <option value="Corn" className="bg-slate-900">Corn</option>
-                  <option value="Soybean" className="bg-slate-900">Soybean</option>
+                  <option value="Grapes" className="bg-slate-900">Grapes (Viticulture)</option>
+                  <option value="Tomato" className="bg-slate-900">Tomato (Solanaceae)</option>
+                  <option value="Potato" className="bg-slate-900">Potato (Solanaceae)</option>
+                  <option value="Onions" className="bg-slate-900">Onion (Alliaceae)</option>
+                  <option value="Wheat" className="bg-slate-900">Wheat (Cereals)</option>
+                  <option value="Rice" className="bg-slate-900">Rice / Paddy (Cereals)</option>
+                  <option value="Sugarcane" className="bg-slate-900">Sugarcane (Cash Crop)</option>
+                  <option value="Cotton" className="bg-slate-900">Cotton (Fiber / Cash Crop)</option>
+                  <option value="Soybean" className="bg-slate-900">Soybean (Oilseeds)</option>
+                  <option value="Groundnuts" className="bg-slate-900">Groundnut (Oilseeds)</option>
+                  <option value="Maize" className="bg-slate-900">Maize / Corn (Cereals)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block font-bold text-slate-300 mb-1">Geographical Location</label>
+                <label className="block font-bold text-slate-300 mb-1">Geographical Location (India Hub)</label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Columbia Basin, Sector 4"
+                  placeholder="e.g. Nashik / Pune (Maharashtra)"
                   value={newLocation}
                   onChange={(e) => setNewLocation(e.target.value)}
                   className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-neon-mint"

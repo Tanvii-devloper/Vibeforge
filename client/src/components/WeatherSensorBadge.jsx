@@ -6,6 +6,9 @@ export default function WeatherSensorBadge({
   relativeHumidity = 85.0,
   leafWetnessHours = 6.5,
   windSpeed = 5.2,
+  regionName = '',
+  regionHub = '',
+  regionBadge = '',
   compact = false
 }) {
   const isHighRisk = relativeHumidity > 85.0 && leafWetnessHours >= 6.0;
@@ -15,6 +18,11 @@ export default function WeatherSensorBadge({
   if (compact) {
     return (
       <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
+        {regionName && (
+          <span className="bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/40 text-emerald-300 font-bold">
+            {regionName}
+          </span>
+        )}
         <span className="flex items-center space-x-1.5 bg-black/40 px-2.5 py-1 rounded-lg border border-white/10 text-slate-200">
           <Thermometer className="w-3.5 h-3.5 text-amber-400" />
           <span>{temperature}°C</span>
@@ -43,10 +51,19 @@ export default function WeatherSensorBadge({
             <Radio className="w-4 h-4 animate-pulse" />
           </div>
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 font-mono">
-              Hyper-Local Micro-Climatic Telemetry HUD
-            </h4>
-            <p className="text-[11px] text-slate-400">Canopy sensor nodes streaming ambient vectors in real time</p>
+            <div className="flex items-center space-x-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 font-mono">
+                Hyper-Local Micro-Climatic Telemetry HUD
+              </h4>
+              {regionName && (
+                <span className="text-[10px] bg-forest-800/80 text-neon-mint border border-neon-mint/40 px-2 py-0.5 rounded-md font-mono font-bold">
+                  {regionName}
+                </span>
+              )}
+            </div>
+            <p className="text-[11px] text-slate-400">
+              {regionHub ? `Active Hub: ${regionHub} · Canopy nodes streaming ambient vectors` : 'Canopy sensor nodes streaming ambient vectors in real time'}
+            </p>
           </div>
         </div>
 
