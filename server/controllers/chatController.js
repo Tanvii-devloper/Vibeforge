@@ -95,20 +95,29 @@ export async function handleChatMessage(req, res) {
         const systemPrompt = `You are "AgriGuard Expert", a world-class plant pathologist and agricultural micro-climatic early warning assistant.
 Provide crisp, authoritative, practical advice for farmers. Highlight actionable chemical active ingredients, organic bio-fungicides, optimal spray windows (morning 06:00-09:30, low wind <8 km/h), and micro-climatic triggers (RH > 85%, leaf wetness > 6h). Keep responses structured with concise bullet points.`;
 
-        const response = await ai.models.generateContent({
-          model: 'gemini-2.5-flash',
-          contents: [
-            { role: 'user', parts: [{ text: `${systemPrompt}\n\nFarmer question: ${message}` }] }
-          ]
-        });
-
-        const reply = response.text || response.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply) {
-          return res.json({
-            success: true,
-            reply: reply,
-            source: 'gemini-2.5-flash'
-          });
+        let reply = '';
+        const candidateModels = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+        
+        for (const modelName of candidateModels) {
+          try {
+            const response = await ai.models.generateContent({
+              model: modelName,
+              contents: message,
+              config: {
+                systemInstruction: systemPrompt
+              }
+            });
+            reply = response.text || response.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (reply && reply.trim() !== '') {
+              return res.json({
+                success: true,
+                reply: reply,
+                source: modelName
+              });
+            }
+          } catch (modelErr) {
+            console.warn(`Model ${modelName} error, trying next candidate:`, modelErr.message);
+          }
         }
       } catch (geminiError) {
         console.warn('Gemini chat API fallback engaged:', geminiError.message);

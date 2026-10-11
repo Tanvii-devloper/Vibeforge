@@ -49,26 +49,35 @@ export async function analyzeCropImage(base64Image, mimeType = 'image/jpeg', cro
 
   if (ai) {
     try {
-      console.log(`[Gemini SDK] Invoking gemini-2.5-flash for ${cropType} pathology diagnosis...`);
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: [
-          {
-            inlineData: {
-              data: base64Image,
-              mimeType: mimeType
+      console.log(`[Gemini SDK] Invoking gemini-3.8-flash for ${cropType} pathology diagnosis...`);
+      let response = null;
+      const modelsToTry = ['gemini-3.8-flash', 'gemini-2.5-flash', 'gemini-1.5-flash'];
+      for (const model of modelsToTry) {
+        try {
+          response = await ai.models.generateContent({
+            model: model,
+            contents: [
+              {
+                inlineData: {
+                  data: base64Image,
+                  mimeType: mimeType
+                }
+              },
+              {
+                text: `Analyze this ${cropType} crop leaf image for disease symptoms, identify the specific pathogen, provide a diagnostic confidence percentage (0-100), and summarize visible symptoms in valid JSON matching the required schema. Crop Growth Stage: ${metadata.growthStage || 'Vegetative'}. Additional notes: ${metadata.symptomDescription || 'None'}. Return strictly a JSON object matching schema: {"detectedDisease": string, "diagnosticConfidence": number, "symptomSummary": string, "pathogenCategory": string, "riskAssessment": {"sporulationPotential": string, "recommendedAction": string, "sprayWindow": string}}`
+              }
+            ],
+            config: {
+              systemInstruction: SYSTEM_INSTRUCTION,
+              responseMimeType: 'application/json',
+              responseSchema: JSON_SCHEMA
             }
-          },
-          {
-            text: `Analyze this ${cropType} crop leaf image for disease symptoms, identify the specific pathogen, provide a diagnostic confidence percentage (0-100), and summarize visible symptoms in valid JSON matching the required schema. Crop Growth Stage: ${metadata.growthStage || 'Vegetative'}. Additional notes: ${metadata.symptomDescription || 'None'}. Return strictly a JSON object matching schema: {"detectedDisease": string, "diagnosticConfidence": number, "symptomSummary": string, "pathogenCategory": string, "riskAssessment": {"sporulationPotential": string, "recommendedAction": string, "sprayWindow": string}}`
-          }
-        ],
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-          responseMimeType: 'application/json',
-          responseSchema: JSON_SCHEMA
+          });
+          if (response && response.text) break;
+        } catch (mErr) {
+          console.warn(`[Gemini SDK] Model ${model} unavailable:`, mErr.message);
         }
-      });
+      }
 
       if (response && response.text) {
         const parsed = JSON.parse(response.text);
