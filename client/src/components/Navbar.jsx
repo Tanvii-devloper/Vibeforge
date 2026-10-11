@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   Sprout, 
@@ -6,8 +6,9 @@ import {
   MapPin, 
   BarChart3, 
   ScanLine, 
-  AlertTriangle, 
-  ShieldCheck,
+  ShieldCheck, 
+  Radio, 
+  ChevronDown,
   Menu,
   X
 } from 'lucide-react';
@@ -15,13 +16,12 @@ import {
 export default function Navbar() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeAlertCount, setActiveAlertCount] = useState(2);
 
   const navLinks = [
     { name: 'Dashboard', path: '/', icon: Activity },
     { name: 'Diagnostic Studio', path: '/diagnose', icon: ScanLine },
-    { name: 'Field Plots', path: '/fields', icon: MapPin },
-    { name: 'Epidemic Trends', path: '/analytics', icon: BarChart3 },
+    { name: 'Farm Plots', path: '/fields', icon: MapPin },
+    { name: 'Epidemic Analytics', path: '/analytics', icon: BarChart3 },
   ];
 
   const isActive = (path) => {
@@ -31,25 +31,27 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo & Brand */}
+          {/* Brand Logo & Title */}
           <Link to="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center shadow-lg shadow-emerald-900/40 group-hover:scale-105 transition-transform">
-              <Sprout className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 rounded-xl bg-forest-800 flex items-center justify-center text-white shadow-md shadow-forest-900/10 group-hover:bg-forest-700 transition-colors">
+              <Sprout className="w-5 h-5 text-mint-400" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-lg text-white tracking-tight">CropGuard</span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">AI 2.5</span>
+                <span className="font-extrabold text-lg text-slate-900 tracking-tight font-sans">AgriGuard</span>
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-forest-50 text-forest-800 border border-forest-200">
+                  ENTERPRISE
+                </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-medium tracking-wider uppercase">Micro-Climatic Warning System</p>
+              <p className="text-[11px] text-slate-500 font-medium tracking-wide">Micro-Climatic Pathology Platform</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => {
               const Icon = link.icon;
@@ -58,40 +60,43 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
                     active
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-900/30 font-semibold'
-                      : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                      ? 'bg-forest-800 text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className={`w-4 h-4 ${active ? 'text-mint-300' : 'text-slate-500'}`} />
                   <span>{link.name}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Status Indicators & Alerts */}
-          <div className="hidden sm:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-xs text-slate-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span className="font-mono">Sensor Hub: Online</span>
+          {/* Right Status Badges & Quick Action */}
+          <div className="hidden sm:flex items-center space-x-3">
+            <div className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-forest-600"></span>
+              </span>
+              <span className="font-mono text-slate-600">IoT Hub: Active</span>
             </div>
 
             <Link
               to="/diagnose"
-              className="relative flex items-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-md shadow-emerald-950 transition-all hover:scale-102"
+              className="flex items-center space-x-1.5 bg-forest-800 hover:bg-forest-700 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm hover:shadow transition-all"
             >
-              <ScanLine className="w-4 h-4" />
-              <span>New Diagnosis</span>
+              <ScanLine className="w-4 h-4 text-mint-400" />
+              <span>Run Diagnostic Scan</span>
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -101,7 +106,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-1">
+        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1.5 shadow-lg">
           {navLinks.map((link) => {
             const Icon = link.icon;
             const active = isActive(link.path);
@@ -110,25 +115,25 @@ export default function Navbar() {
                 key={link.name}
                 to={link.path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium ${
+                className={`flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-semibold ${
                   active
-                    ? 'bg-emerald-600 text-white font-semibold'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-forest-800 text-white'
+                    : 'text-slate-700 hover:bg-slate-100'
                 }`}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className={`w-5 h-5 ${active ? 'text-mint-300' : 'text-slate-500'}`} />
                 <span>{link.name}</span>
               </Link>
             );
           })}
-          <div className="pt-2 border-t border-slate-800">
+          <div className="pt-2 border-t border-slate-150">
             <Link
               to="/diagnose"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center space-x-2 w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium rounded-lg"
+              className="flex items-center justify-center space-x-2 w-full py-2.5 bg-forest-800 text-white text-sm font-bold rounded-lg shadow-sm"
             >
-              <ScanLine className="w-4 h-4" />
-              <span>Launch Diagnostic Studio</span>
+              <ScanLine className="w-4 h-4 text-mint-400" />
+              <span>Run Diagnostic Scan</span>
             </Link>
           </div>
         </div>

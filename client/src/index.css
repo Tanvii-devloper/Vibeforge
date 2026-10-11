@@ -4,42 +4,65 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 font-sans min-h-screen;
+    @apply bg-slate-50 text-slate-900 font-sans min-h-screen selection:bg-emerald-600 selection:text-white;
+    background-color: #F8FAFC;
     background-image: 
-      radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.08) 0%, transparent 45%),
-      radial-gradient(circle at 85% 85%, rgba(34, 197, 94, 0.05) 0%, transparent 45%);
-    background-attachment: fixed;
+      radial-gradient(at 0% 0%, rgba(27, 77, 62, 0.04) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(46, 139, 87, 0.03) 0px, transparent 50%);
   }
 }
 
-/* Custom scrollbars */
+/* Custom Clean Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #94A3B8;
 }
 
-/* Glassmorphism card utility */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+/* Skeleton Loading Shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-.glass-panel-hover {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #F1F5F9 25%, #E2E8F0 50%, #F1F5F9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite ease-in-out;
 }
-.glass-panel-hover:hover {
-  border-color: rgba(74, 222, 128, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px 0 rgba(34, 197, 94, 0.1);
+
+/* Enterprise Card Utility */
+.enterprise-card {
+  @apply bg-white border border-slate-200/80 rounded-xl shadow-sm transition-all duration-200;
+}
+
+.enterprise-card-hover {
+  @apply hover:border-forest-600/40 hover:shadow-md;
+}
+
+/* Pulse Glows */
+@keyframes pulseGlowRed {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+  }
+}
+
+.pulse-critical {
+  animation: pulseGlowRed 2s infinite;
 }

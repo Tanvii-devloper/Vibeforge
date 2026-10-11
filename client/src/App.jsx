@@ -6,18 +6,18 @@ import DiagnosticStudioPage from './pages/DiagnosticStudioPage';
 import AdvisoryDetailPage from './pages/AdvisoryDetailPage';
 import FieldsPage from './pages/FieldsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
-import { Sprout, ShieldCheck, Heart } from 'lucide-react';
+import { Sprout, ShieldCheck } from 'lucide-react';
 
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+      <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans">
         
-        {/* Navigation Bar */}
+        {/* Enterprise Top Navigation */}
         <Navbar />
 
         {/* Main Content Area */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-7">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/diagnose" element={<DiagnosticStudioPage />} />
@@ -28,24 +28,24 @@ export default function App() {
           </Routes>
         </main>
 
-        {/* Application Footer */}
-        <footer className="border-t border-slate-900 bg-slate-950/80 py-8 text-xs text-slate-500">
+        {/* Enterprise Footer */}
+        <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 rounded-lg bg-emerald-600/30 text-emerald-400 flex items-center justify-center font-bold">
+            <div className="flex items-center space-x-2.5">
+              <div className="w-6 h-6 rounded-md bg-forest-800 text-mint-300 flex items-center justify-center font-bold">
                 <Sprout className="w-3.5 h-3.5" />
               </div>
-              <span className="font-semibold text-slate-300">CropGuard AI</span>
-              <span>— AI-Powered Micro-Climatic Crop Disease Early Warning System</span>
+              <span className="font-bold text-slate-800">AgriGuard Enterprise</span>
+              <span className="text-slate-400">— AI-Powered Micro-Climatic Pathology Platform</span>
             </div>
 
-            <div className="flex items-center space-x-6 text-[11px]">
-              <span className="flex items-center space-x-1 text-slate-400">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="flex items-center space-x-6 text-[11px] font-medium text-slate-500">
+              <span className="flex items-center space-x-1.5 text-forest-800 font-semibold">
+                <ShieldCheck className="w-3.5 h-3.5 text-forest-700" />
                 <span>Zero False Chemical Alarms Standard</span>
               </span>
-              <span>Powered by Gemini 2.5 Flash</span>
-              <span>Deployed on Replit</span>
+              <span>Gemini 2.5 Flash Multimodal</span>
+              <span>Cloud Telemetry Sync</span>
             </div>
           </div>
         </footer>
